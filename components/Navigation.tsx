@@ -1,7 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Search from './Search'; // 👈 1. Arama bileşenini buraya çağırdık
 
 export default function Navigation() {
+  const pathname = usePathname();
+  const isHomepage = pathname === '/';
+
   return (
     <nav className="border-b border-gray-800 bg-[#0a0a0a]/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
@@ -48,10 +54,12 @@ export default function Navigation() {
               GCP
             </Link>
 
-            {/* 👇 2. Arama Kutusunu En Sona Ekledik 👇 */}
-            <div className="pl-2 border-l border-gray-800 ml-2">
+            {/* 👇 2. Arama Kutusunu En Sona Ekledik - Hidden on Homepage 👇 */}
+            {!isHomepage && (
+              <div className="pl-2 border-l border-gray-800 ml-2">
                 <Search />
-            </div>
+              </div>
+            )}
 
           </div>
         </div>
