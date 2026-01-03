@@ -1,11 +1,11 @@
 /** @type {import('next').Next.Config} */
 const nextConfig = {
   eslint: {
-    // Build sırasında lint hatalarını görmezden gel
+    // Build sırasında lint hatalarını (o meşhur kesme işaretlerini) görmezden gel
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // Varsa tip hatalarını da görmezden gelmek için (isteğe bağlı)
+    // Varsa tip hatalarını da görmezden gelerek build'in tamamlanmasını sağla
     ignoreBuildErrors: true,
   },
 };
