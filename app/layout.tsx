@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import EnableContextMenu from '@/components/EnableContextMenu';
 
 const inter = Inter({
@@ -69,16 +70,12 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased`}>
         <EnableContextMenu />
-        <div className="min-h-screen bg-[#0a0a0a] text-gray-200">
+        <div className="min-h-screen bg-[#0a0a0a] text-gray-200 flex flex-col">
           <Navigation />
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto px-4 py-8 flex-grow">
             {children}
           </main>
-          <footer className="border-t border-gray-800 mt-16 py-8">
-            <div className="container mx-auto px-4 text-center text-sm text-gray-500">
-              <p>&copy; {new Date().getFullYear()} Error Code Reference. All rights reserved.</p>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>
