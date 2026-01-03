@@ -10,6 +10,7 @@ const inter = Inter({
   display: 'swap',
 });
 
+// Senin harika dinamik URL mantığın:
 const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
 
 export const metadata: Metadata = {
@@ -21,7 +22,15 @@ export const metadata: Metadata = {
   keywords: ['error codes', 'HTTP status codes', 'AWS errors', 'Azure errors', 'GCP errors', 'API errors', 'troubleshooting'],
   authors: [{ name: 'Error Code Reference' }],
   creator: 'Error Code Reference',
+  
+  // 1. Base URL zaten var (Süper)
   metadataBase: new URL(baseUrl),
+
+  // 👇 2. EKSİK OLAN PARÇA BU (Bunu eklemezsen kopya içerik sorunu çözülmez)
+  alternates: {
+    canonical: '/',
+  },
+
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -47,7 +56,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Add your verification codes here
+    // Search Console kodunu buraya ekleyebilirsin ama TXT kaydı ile zaten hallettik.
   },
 };
 
