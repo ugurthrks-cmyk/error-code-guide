@@ -4,7 +4,7 @@ export const awsErrors: Record<string, ErrorCode> = {
     'AccessDenied': {
       code: 'AccessDenied',
       name: 'Access Denied',
-      description: `Getting hit with an **AccessDenied** error usually means your IAM User or Role lacks the specific JSON policy required to perform the action—the policy might be missing the exact Action, Resource ARN, or Condition needed. This client-side error (4xx) happens when AWS evaluates your IAM policies and denies access. Most common when IAM policies don't grant the specific permission, but also appears when Service Control Policies (SCPs) block actions, resource-based policies deny access, Security Groups block network access, or VPC endpoints aren't configured correctly.`,
+      description: `Getting hit with an AccessDenied error usually means your IAM User or Role lacks the specific JSON policy required to perform the action—the policy might be missing the exact Action, Resource ARN, or Condition needed. This client-side error (4xx) happens when AWS evaluates your IAM policies and denies access. Most common when IAM policies don't grant the specific permission, but also appears when Service Control Policies (SCPs) block actions, resource-based policies deny access, Security Groups block network access, or VPC endpoints aren't configured correctly.`,
       metaDescription: 'Fix AccessDenied errors by reviewing IAM policies, checking SCPs, verifying Security Groups, and diagnosing VPC endpoint configurations with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy missing required Action (e.g., s3:GetObject). Policy Resource ARN doesn't match target resource. Service Control Policy (SCP) blocks action at organization level. IAM role trust policy incorrect. Policy Condition not met (IP, time, MFA).`,
@@ -100,7 +100,7 @@ aws ec2 describe-vpc-endpoint-policy --vpc-endpoint-id \${VPC_ENDPOINT_ID}`,
     'InvalidParameterValue': {
       code: 'InvalidParameterValue',
       name: 'Invalid Parameter Value',
-      description: `Hitting an **InvalidParameterValue** error means one of your API parameters has the wrong format, is out of range, or violates AWS service constraints—EC2 instance types must be valid, S3 bucket names must follow naming rules, or IAM role names must match patterns. This client-side error (4xx) happens when AWS validates your request parameters before processing. Most common when EC2 instance types are invalid, S3 bucket names violate rules, or IAM resource names don't match patterns, but also appears when parameter values exceed limits, unsupported combinations are used, or data types don't match expected formats.`,
+      description: `Hitting an InvalidParameterValue error means one of your API parameters has the wrong format, is out of range, or violates AWS service constraints—EC2 instance types must be valid, S3 bucket names must follow naming rules, or IAM role names must match patterns. This client-side error (4xx) happens when AWS validates your request parameters before processing. Most common when EC2 instance types are invalid, S3 bucket names violate rules, or IAM resource names don't match patterns, but also appears when parameter values exceed limits, unsupported combinations are used, or data types don't match expected formats.`,
       metaDescription: 'Debug InvalidParameterValue errors by validating EC2 instance types, checking S3 bucket naming rules, and verifying IAM resource name patterns with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM role/user name doesn't match naming pattern (1-64 chars, alphanumeric). Policy document JSON syntax error. Resource ARN format incorrect. Tag key/value format invalid.`,
@@ -204,7 +204,7 @@ aws iam get-role --role-name \${ROLE_NAME} 2>&1 || echo "Role not found or inval
     'BucketAlreadyExists': {
       code: 'BucketAlreadyExists',
       name: 'Bucket Already Exists',
-      description: `Hitting a **BucketAlreadyExists** error means your S3 bucket name is already taken globally—S3 bucket names are unique across all AWS accounts worldwide, so someone else already claimed that name. This client-side error (4xx) happens when AWS validates bucket name uniqueness. Most common when bucket names are too generic, but also appears when recently deleted buckets are still in the 90-day deletion grace period, bucket names violate S3 naming rules, or you're trying to create a bucket that already exists in your account.`,
+      description: `Hitting a BucketAlreadyExists error means your S3 bucket name is already taken globally—S3 bucket names are unique across all AWS accounts worldwide, so someone else already claimed that name. This client-side error (4xx) happens when AWS validates bucket name uniqueness. Most common when bucket names are too generic, but also appears when recently deleted buckets are still in the 90-day deletion grace period, bucket names violate S3 naming rules, or you're trying to create a bucket that already exists in your account.`,
       metaDescription: 'Solve BucketAlreadyExists by generating unique S3 bucket names, checking naming rules, and handling recently deleted bucket reservations with our AWS troubleshooting guide.',
       causes: [
         `Identity: Bucket name already exists in your account. IAM permissions allow listing but not creating buckets.`,
@@ -301,7 +301,7 @@ fi`,
     'NoSuchBucket': {
       code: 'NoSuchBucket',
       name: 'No Such Bucket',
-      description: `Getting a **NoSuchBucket** error means the S3 bucket you're trying to access doesn't exist in your AWS account, or you don't have permission to see it—the bucket might have been deleted, the name is misspelled, or it's in a different region. This client-side error (4xx) happens when AWS can't find the bucket. Most common when bucket names have typos, but also appears when buckets were deleted, buckets are in different regions, IAM policies don't grant ListBucket permission, or you're accessing a bucket from another account without proper permissions.`,
+      description: `Getting a NoSuchBucket error means the S3 bucket you're trying to access doesn't exist in your AWS account, or you don't have permission to see it—the bucket might have been deleted, the name is misspelled, or it's in a different region. This client-side error (4xx) happens when AWS can't find the bucket. Most common when bucket names have typos, but also appears when buckets were deleted, buckets are in different regions, IAM policies don't grant ListBucket permission, or you're accessing a bucket from another account without proper permissions.`,
       metaDescription: 'Fix NoSuchBucket errors by verifying bucket names, checking regions, listing accessible buckets, and reviewing IAM permissions with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy missing s3:ListBucket permission. Bucket policy denies access. Cross-account access not configured. IAM user/role can't see bucket.`,
@@ -400,7 +400,7 @@ aws s3 ls s3://\${BUCKET_NAME}/ --region \${CORRECT_REGION}`,
     'NoSuchKey': {
       code: 'NoSuchKey',
       name: 'No Such Key',
-      description: `Hitting a **NoSuchKey** error means the S3 object (file) you're trying to access doesn't exist at that key path in the bucket—the object might have been deleted, the key path is misspelled, or it's in a different folder. This client-side error (4xx) happens when AWS can't find the object at the specified key. Most common when object keys have typos, but also appears when objects were deleted, keys have incorrect paths, case sensitivity doesn't match, or objects are in different prefixes/folders.`,
+      description: `Hitting a NoSuchKey error means the S3 object (file) you're trying to access doesn't exist at that key path in the bucket—the object might have been deleted, the key path is misspelled, or it's in a different folder. This client-side error (4xx) happens when AWS can't find the object at the specified key. Most common when object keys have typos, but also appears when objects were deleted, keys have incorrect paths, case sensitivity doesn't match, or objects are in different prefixes/folders.`,
       metaDescription: 'Debug NoSuchKey errors by listing S3 objects, verifying key paths, checking case sensitivity, and reviewing object permissions with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy missing s3:GetObject permission. Bucket policy denies object access. Object encryption requires specific KMS key access.`,
@@ -524,7 +524,7 @@ aws s3api head-object --bucket \${BUCKET_NAME} --key \$(echo \${OBJECT_KEY} | tr
     'InvalidAccessKeyId': {
       code: 'InvalidAccessKeyId',
       name: 'Invalid Access Key ID',
-      description: `Getting an **InvalidAccessKeyId** error means your AWS Access Key ID doesn't exist in AWS—the key might have been deleted, it's misspelled, or it belongs to a different AWS account. This client-side error (4xx) happens when AWS can't find the access key in its records. Most common when access keys are deleted or rotated, but also appears when credentials are misconfigured, access keys are deactivated, or there's a typo in the key ID.`,
+      description: `Getting an InvalidAccessKeyId error means your AWS Access Key ID doesn't exist in AWS—the key might have been deleted, it's misspelled, or it belongs to a different AWS account. This client-side error (4xx) happens when AWS can't find the access key in its records. Most common when access keys are deleted or rotated, but also appears when credentials are misconfigured, access keys are deactivated, or there's a typo in the key ID.`,
       metaDescription: 'Fix InvalidAccessKeyId by verifying credentials, checking IAM user access keys, regenerating keys if needed, and validating credentials file format with our AWS guide.',
       causes: [
         `Identity: Access key ID doesn't exist in AWS. Access key was deleted from IAM user. Access key belongs to different AWS account. Access key deactivated.`,
@@ -642,7 +642,7 @@ echo "export AWS_DEFAULT_REGION=us-east-1"`,
     'SignatureDoesNotMatch': {
       code: 'SignatureDoesNotMatch',
       name: 'Signature Does Not Match',
-      description: `Getting a **SignatureDoesNotMatch** error means AWS calculated a different request signature than what you sent—your Secret Access Key is wrong, system clock is skewed, or the request was modified after signing. This client-side error (4xx) happens when AWS validates request signatures using Signature Version 4. Most common when Secret Access Keys are incorrect, but also appears when system clocks are out of sync (more than 15 minutes), requests are modified after signing, regions don't match, or signing algorithms are wrong.`,
+      description: `Getting a SignatureDoesNotMatch error means AWS calculated a different request signature than what you sent—your Secret Access Key is wrong, system clock is skewed, or the request was modified after signing. This client-side error (4xx) happens when AWS validates request signatures using Signature Version 4. Most common when Secret Access Keys are incorrect, but also appears when system clocks are out of sync (more than 15 minutes), requests are modified after signing, regions don't match, or signing algorithms are wrong.`,
       metaDescription: 'Fix SignatureDoesNotMatch by verifying Secret Access Keys, synchronizing system clocks, checking region settings, and validating request signing with our AWS troubleshooting guide.',
       causes: [
         `Identity: Secret Access Key is incorrect. Access key was rotated but old secret still in use. Credentials file has wrong secret. Environment variable has typo.`,
@@ -773,7 +773,7 @@ fi`,
     'Throttling': {
       code: 'Throttling',
       name: 'Throttling Exception',
-      description: `Hitting a **Throttling** error means AWS is rate-limiting your requests—you're making too many API calls too quickly, exceeding service quotas, or exhausting burst capacity. This client-side error (4xx) happens when AWS enforces rate limits to protect service stability. Most common when DynamoDB, S3, or EC2 APIs are called too rapidly, but also appears when Service Quotas are exceeded, burst capacity is exhausted, or account-level throttling is active.`,
+      description: `Hitting a Throttling error means AWS is rate-limiting your requests—you're making too many API calls too quickly, exceeding service quotas, or exhausting burst capacity. This client-side error (4xx) happens when AWS enforces rate limits to protect service stability. Most common when DynamoDB, S3, or EC2 APIs are called too rapidly, but also appears when Service Quotas are exceeded, burst capacity is exhausted, or account-level throttling is active.`,
       metaDescription: 'Solve Throttling errors by implementing exponential backoff, reducing request rates, checking Service Quotas, and using request queuing with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM user/role making too many requests. Service Control Policy (SCP) enforces rate limits. Account-level throttling active.`,
@@ -870,7 +870,7 @@ retry_aws_command() {
         attempt=\$((attempt + 1))
         if [ \$attempt -lt \${max_retries} ]; then
           # Exponential backoff with jitter
-          delay=\$((2 ** attempt + RANDOM % 1000 / 1000))
+          delay=\$((2  attempt + RANDOM % 1000 / 1000))
           echo "Throttled, retrying in \${delay}s (attempt \${attempt}/\${max_retries})..."
           sleep \${delay}
           continue
@@ -897,7 +897,7 @@ retry_aws_command aws dynamodb get-item \\
     'ResourceNotFoundException': {
       code: 'ResourceNotFoundException',
       name: 'Resource Not Found',
-      description: `Getting a **ResourceNotFoundException** means the AWS resource you're trying to access doesn't exist—the resource ID is wrong, it was deleted, or it's in a different region/account. This client-side error (4xx) is common across DynamoDB, Lambda, EC2, and other AWS services. Most common when resource IDs have typos, but also appears when resources were deleted, resources are in different regions, resources belong to different accounts, or IAM policies don't grant List permissions to see the resource.`,
+      description: `Getting a ResourceNotFoundException means the AWS resource you're trying to access doesn't exist—the resource ID is wrong, it was deleted, or it's in a different region/account. This client-side error (4xx) is common across DynamoDB, Lambda, EC2, and other AWS services. Most common when resource IDs have typos, but also appears when resources were deleted, resources are in different regions, resources belong to different accounts, or IAM policies don't grant List permissions to see the resource.`,
       metaDescription: 'Debug ResourceNotFoundException by listing resources, verifying resource IDs, checking regions, and reviewing IAM permissions with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy missing List/Describe permissions. Resource in different AWS account. Cross-account access not configured.`,
@@ -1001,7 +1001,7 @@ fi`,
     'InvalidParameter': {
       code: 'InvalidParameter',
       name: 'Invalid Parameter',
-      description: `Hitting an **InvalidParameter** error means one of your API parameters has the wrong name, type, or value—parameter names must match AWS API exactly, types must be correct (string vs number), and values must be valid. This client-side error (4xx) happens when AWS validates request parameters. Most common when parameter names are misspelled, but also appears when parameter types are wrong, required parameters are missing, parameter values are invalid, or unsupported parameter combinations are used.`,
+      description: `Hitting an InvalidParameter error means one of your API parameters has the wrong name, type, or value—parameter names must match AWS API exactly, types must be correct (string vs number), and values must be valid. This client-side error (4xx) happens when AWS validates request parameters. Most common when parameter names are misspelled, but also appears when parameter types are wrong, required parameters are missing, parameter values are invalid, or unsupported parameter combinations are used.`,
       metaDescription: 'Fix InvalidParameter errors by validating parameter names, checking types, reviewing API documentation, and ensuring required parameters are included with our AWS guide.',
       causes: [
         `Identity: IAM policy parameter restrictions. Service Control Policy (SCP) blocks parameter values. Parameter conditions not met.`,
@@ -1133,7 +1133,7 @@ echo "If dry-run succeeds, parameters are valid"`,
     'LimitExceededException': {
       code: 'LimitExceededException',
       name: 'Limit Exceeded',
-      description: `Hitting a **LimitExceededException** means your request would exceed AWS Service Quotas—you've reached the maximum number of resources, operations, or concurrent actions allowed for your account. This client-side error (4xx) happens when AWS enforces account-level or service-level limits. Most common when creating too many EC2 instances, DynamoDB tables, or IAM roles, but also appears when Service Quotas (formerly soft limits) are exceeded, concurrent operation limits are hit, or account-level resource caps are reached.`,
+      description: `Hitting a LimitExceededException means your request would exceed AWS Service Quotas—you've reached the maximum number of resources, operations, or concurrent actions allowed for your account. This client-side error (4xx) happens when AWS enforces account-level or service-level limits. Most common when creating too many EC2 instances, DynamoDB tables, or IAM roles, but also appears when Service Quotas (formerly soft limits) are exceeded, concurrent operation limits are hit, or account-level resource caps are reached.`,
       metaDescription: 'Fix LimitExceededException by checking Service Quotas, deleting unused resources, requesting limit increases, and monitoring current usage with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM role/user limit exceeded. Service Control Policy (SCP) enforces lower limits. Account-level restrictions active.`,
@@ -1243,7 +1243,7 @@ aws iam list-roles --query 'Roles[*].[RoleName,CreateDate]' --output table | hea
     'InsufficientCapacityException': {
       code: 'InsufficientCapacityException',
       name: 'Insufficient Capacity',
-      description: `Getting an **InsufficientCapacityException** means AWS doesn't have enough physical capacity in the requested Availability Zone to launch your EC2 instance—the specific instance type or zone is temporarily out of capacity. This client-side error (4xx) happens when AWS can't allocate hardware resources. Most common when launching EC2 instances in popular zones, but also appears when specific instance types are unavailable, regions have capacity constraints, Spot instances have no capacity, or temporary capacity issues occur.`,
+      description: `Getting an InsufficientCapacityException means AWS doesn't have enough physical capacity in the requested Availability Zone to launch your EC2 instance—the specific instance type or zone is temporarily out of capacity. This client-side error (4xx) happens when AWS can't allocate hardware resources. Most common when launching EC2 instances in popular zones, but also appears when specific instance types are unavailable, regions have capacity constraints, Spot instances have no capacity, or temporary capacity issues occur.`,
       metaDescription: 'Resolve InsufficientCapacityException by trying different Availability Zones, switching instance types, retrying with delays, or using on-demand instead of Spot with our AWS guide.',
       causes: [
         `Identity: IAM permissions allow launch but capacity unavailable. Service Control Policy (SCP) restricts zones but capacity issue.`,
@@ -1349,7 +1349,7 @@ done`,
     'InvalidUserID.NotFound': {
       code: 'InvalidUserID.NotFound',
       name: 'Invalid User ID Not Found',
-      description: `Getting an **InvalidUserID.NotFound** error means the IAM User ID you're referencing doesn't exist in your AWS account—the user might have been deleted, the ID is misspelled, or it belongs to a different account. This client-side error (4xx) happens when AWS can't find the user by ID. Most common when IAM users are deleted, but also appears when user IDs are misspelled, users are in different accounts, user ID format is invalid, or IAM policies reference non-existent users.`,
+      description: `Getting an InvalidUserID.NotFound error means the IAM User ID you're referencing doesn't exist in your AWS account—the user might have been deleted, the ID is misspelled, or it belongs to a different account. This client-side error (4xx) happens when AWS can't find the user by ID. Most common when IAM users are deleted, but also appears when user IDs are misspelled, users are in different accounts, user ID format is invalid, or IAM policies reference non-existent users.`,
       metaDescription: 'Fix InvalidUserID.NotFound by listing IAM users, verifying user IDs, checking if users were deleted, and using usernames instead of IDs with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM user ID doesn't exist. User was deleted from account. User ID belongs to different AWS account. User ID format invalid (should be AIDA...).`,
@@ -1453,7 +1453,7 @@ fi`,
     'MalformedQueryString': {
       code: 'MalformedQueryString',
       name: 'Malformed Query String',
-      description: `Hitting a **MalformedQueryString** error means your AWS API request has invalid query string syntax—special characters aren't URL-encoded, parameters are duplicated, or the query format violates AWS API requirements. This client-side error (4xx) happens when AWS parses query parameters. Most common when building S3 presigned URLs or API Gateway requests manually, but also appears when query parameters have unencoded special characters, duplicate parameter names exist, or query string syntax is invalid.`,
+      description: `Hitting a MalformedQueryString error means your AWS API request has invalid query string syntax—special characters aren't URL-encoded, parameters are duplicated, or the query format violates AWS API requirements. This client-side error (4xx) happens when AWS parses query parameters. Most common when building S3 presigned URLs or API Gateway requests manually, but also appears when query parameters have unencoded special characters, duplicate parameter names exist, or query string syntax is invalid.`,
       metaDescription: 'Debug MalformedQueryString by URL-encoding parameters, checking for duplicate keys, validating query syntax, and using AWS SDK parameter objects with our AWS guide.',
       causes: [
         `Identity: IAM policy query string restrictions. Service Control Policy (SCP) blocks certain query parameters.`,
@@ -1561,7 +1561,7 @@ echo "aws s3api list-objects-v2 --bucket BUCKET --prefix PREFIX --max-keys 100"`
     'RequestExpired': {
       code: 'RequestExpired',
       name: 'Request Expired',
-      description: `Getting a **RequestExpired** error means your S3 presigned URL or AWS request has passed its expiration time—presigned URLs typically expire after 1 hour (default) or the time you specified, and AWS requests expire if the timestamp is more than 15 minutes old. This client-side error (4xx) happens when AWS validates request timestamps. Most common when S3 presigned URLs expire, but also appears when system clocks are skewed, request timestamps are too old, or expiration times are set too short.`,
+      description: `Getting a RequestExpired error means your S3 presigned URL or AWS request has passed its expiration time—presigned URLs typically expire after 1 hour (default) or the time you specified, and AWS requests expire if the timestamp is more than 15 minutes old. This client-side error (4xx) happens when AWS validates request timestamps. Most common when S3 presigned URLs expire, but also appears when system clocks are skewed, request timestamps are too old, or expiration times are set too short.`,
       metaDescription: 'Fix RequestExpired by generating new presigned URLs, synchronizing system clocks, increasing expiration times, and validating timestamp validity with our AWS guide.',
       causes: [
         `Identity: IAM policy expiration restrictions. Service Control Policy (SCP) enforces shorter expiration times.`,
@@ -1674,7 +1674,7 @@ fi`,
     'ServiceUnavailable': {
       code: 'ServiceUnavailable',
       name: 'Service Unavailable',
-      description: `Hitting a **ServiceUnavailable** error means the AWS service is temporarily down or overloaded—this is a server-side issue (5xx) that usually resolves with retries. This server-side error happens when AWS services are experiencing outages, maintenance, or capacity issues. Most common during AWS service outages, but also appears when services are in maintenance mode, regions are experiencing issues, services are overloaded, or temporary capacity constraints occur.`,
+      description: `Hitting a ServiceUnavailable error means the AWS service is temporarily down or overloaded—this is a server-side issue (5xx) that usually resolves with retries. This server-side error happens when AWS services are experiencing outages, maintenance, or capacity issues. Most common during AWS service outages, but also appears when services are in maintenance mode, regions are experiencing issues, services are overloaded, or temporary capacity constraints occur.`,
       metaDescription: 'Resolve ServiceUnavailable by implementing exponential backoff retries, checking AWS status pages, trying different regions, and monitoring service health with our AWS guide.',
       causes: [
         `Identity: IAM service temporarily unavailable. Service Control Policy (SCP) service down. Account-level service restrictions.`,
@@ -1734,7 +1734,7 @@ retry_with_backoff() {
       attempt=\$((attempt + 1))
       if [ \$attempt -lt \${max_retries} ]; then
         # Exponential backoff with jitter
-        delay=\$((2 ** attempt + RANDOM % 1000 / 1000))
+        delay=\$((2  attempt + RANDOM % 1000 / 1000))
         echo "Service unavailable, retrying in \${delay}s (attempt \${attempt}/\${max_retries})..."
         sleep \${delay}
         continue
@@ -1782,7 +1782,7 @@ done`,
     'ValidationException': {
       code: 'ValidationException',
       name: 'Validation Exception',
-      description: `Getting a **ValidationException** means your input data failed AWS service validation—DynamoDB items violate schema constraints, Lambda function code has errors, or IAM policy documents have syntax issues. This client-side error (4xx) happens when AWS validates request data before processing. Most common when DynamoDB item attributes don't match table schema, but also appears when Lambda function code is invalid, IAM policy JSON is malformed, or input values violate service constraints.`,
+      description: `Getting a ValidationException means your input data failed AWS service validation—DynamoDB items violate schema constraints, Lambda function code has errors, or IAM policy documents have syntax issues. This client-side error (4xx) happens when AWS validates request data before processing. Most common when DynamoDB item attributes don't match table schema, but also appears when Lambda function code is invalid, IAM policy JSON is malformed, or input values violate service constraints.`,
       metaDescription: 'Fix ValidationException by reviewing error messages, checking DynamoDB schemas, validating IAM policy JSON, and ensuring Lambda code is correct with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy JSON syntax error. Policy document violates IAM constraints. Policy conditions invalid.`,
@@ -1907,7 +1907,7 @@ else
     'BucketAlreadyOwnedByYou': {
       code: 'BucketAlreadyOwnedByYou',
       name: 'Bucket Already Owned By You',
-      description: `Getting a **BucketAlreadyOwnedByYou** error means the S3 bucket name you're trying to create already exists in your AWS account—you own this bucket, so you can't create another with the same name. This client-side error (4xx) happens when AWS checks bucket name uniqueness within your account. Most common when bucket names are reused, but also appears when buckets weren't fully deleted, bucket deletion is still in progress (90-day grace period), or you're trying to recreate a bucket you already own.`,
+      description: `Getting a BucketAlreadyOwnedByYou error means the S3 bucket name you're trying to create already exists in your AWS account—you own this bucket, so you can't create another with the same name. This client-side error (4xx) happens when AWS checks bucket name uniqueness within your account. Most common when bucket names are reused, but also appears when buckets weren't fully deleted, bucket deletion is still in progress (90-day grace period), or you're trying to recreate a bucket you already own.`,
       metaDescription: 'Fix BucketAlreadyOwnedByYou by listing your existing buckets, using the existing bucket, or waiting for deletion to complete with our AWS troubleshooting guide.',
       causes: [
         `Identity: Bucket exists in your account. IAM permissions allow listing but bucket already owned.`,
@@ -2012,7 +2012,7 @@ fi`,
     'InvalidBucketName': {
       code: 'InvalidBucketName',
       name: 'Invalid Bucket Name',
-      description: `Hitting an **InvalidBucketName** error means your S3 bucket name violates AWS naming rules—bucket names must be 3-63 characters, lowercase, alphanumeric with hyphens, and globally unique. This client-side error (4xx) happens when AWS validates bucket name format. Most common when bucket names have uppercase letters or invalid characters, but also appears when names are too short/long, names look like IP addresses, names have consecutive dots, or reserved names are used.`,
+      description: `Hitting an InvalidBucketName error means your S3 bucket name violates AWS naming rules—bucket names must be 3-63 characters, lowercase, alphanumeric with hyphens, and globally unique. This client-side error (4xx) happens when AWS validates bucket name format. Most common when bucket names have uppercase letters or invalid characters, but also appears when names are too short/long, names look like IP addresses, names have consecutive dots, or reserved names are used.`,
       metaDescription: 'Fix InvalidBucketName by following S3 naming rules: 3-63 chars, lowercase, alphanumeric/hyphens only, globally unique. Validate names before creating with our AWS guide.',
       causes: [
         `Identity: IAM policy bucket name restrictions. Service Control Policy (SCP) blocks certain bucket name patterns.`,
@@ -2147,7 +2147,7 @@ fi`,
     'NoSuchEntity': {
       code: 'NoSuchEntity',
       name: 'No Such Entity',
-      description: `Getting a **NoSuchEntity** error means the IAM entity (user, role, policy, or group) you're referencing doesn't exist in your AWS account—the entity might have been deleted, the name is misspelled, or it belongs to a different account. This client-side error (4xx) is common in IAM operations. Most common when IAM users or roles are deleted, but also appears when entity names are misspelled, entities are in different accounts, entity IDs are wrong, or IAM policies reference non-existent entities.`,
+      description: `Getting a NoSuchEntity error means the IAM entity (user, role, policy, or group) you're referencing doesn't exist in your AWS account—the entity might have been deleted, the name is misspelled, or it belongs to a different account. This client-side error (4xx) is common in IAM operations. Most common when IAM users or roles are deleted, but also appears when entity names are misspelled, entities are in different accounts, entity IDs are wrong, or IAM policies reference non-existent entities.`,
       metaDescription: 'Fix NoSuchEntity by listing IAM entities, verifying entity names, checking if entities were deleted, and using correct entity identifiers with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM entity doesn't exist. Entity was deleted from account. Entity belongs to different AWS account. Entity ID/name is incorrect.`,
@@ -2260,7 +2260,7 @@ aws cloudtrail lookup-events \\
     'InvalidClientTokenId': {
       code: 'InvalidClientTokenId',
       name: 'Invalid Client Token ID',
-      description: `Getting an **InvalidClientTokenId** error means your AWS security token (Access Key ID) is invalid or doesn't exist—the token might have been deleted, rotated, or belongs to a different AWS account. This client-side error (4xx) happens when AWS validates request tokens. Most common when IAM access keys are deleted or rotated, but also appears when credentials are misconfigured, tokens are expired, credentials files are corrupted, or you're using credentials from the wrong AWS account.`,
+      description: `Getting an InvalidClientTokenId error means your AWS security token (Access Key ID) is invalid or doesn't exist—the token might have been deleted, rotated, or belongs to a different AWS account. This client-side error (4xx) happens when AWS validates request tokens. Most common when IAM access keys are deleted or rotated, but also appears when credentials are misconfigured, tokens are expired, credentials files are corrupted, or you're using credentials from the wrong AWS account.`,
       metaDescription: 'Fix InvalidClientTokenId by verifying access key IDs, checking credentials configuration, regenerating keys if needed, and validating credentials file format with our AWS guide.',
       causes: [
         `Identity: Access Key ID doesn't exist in AWS. Access key was deleted from IAM user. Access key belongs to different AWS account. Token expired or deactivated.`,
@@ -2372,7 +2372,7 @@ echo "export AWS_DEFAULT_REGION=us-east-1"`,
     'MissingParameter': {
       code: 'MissingParameter',
       name: 'Missing Parameter',
-      description: `Hitting a **MissingParameter** error means your AWS API request is missing a required parameter—AWS usually specifies which parameter is missing in the error message. This client-side error (4xx) happens when AWS validates request parameters. Most common when EC2 run-instances is missing ImageId or InstanceType, but also appears when parameter names are misspelled, nested parameters are missing, conditional parameters are required but not provided, or parameters are in the wrong location in the request.`,
+      description: `Hitting a MissingParameter error means your AWS API request is missing a required parameter—AWS usually specifies which parameter is missing in the error message. This client-side error (4xx) happens when AWS validates request parameters. Most common when EC2 run-instances is missing ImageId or InstanceType, but also appears when parameter names are misspelled, nested parameters are missing, conditional parameters are required but not provided, or parameters are in the wrong location in the request.`,
       metaDescription: 'Fix MissingParameter by reviewing AWS error messages, checking API documentation for required parameters, verifying parameter names, and including all required fields with our AWS guide.',
       causes: [
         `Identity: IAM policy parameter restrictions. Service Control Policy (SCP) requires specific parameters.`,
@@ -2487,7 +2487,7 @@ echo "  --count 1"`,
     'ServiceQuotaExceededException': {
       code: 'ServiceQuotaExceededException',
       name: 'Service Quota Exceeded',
-      description: `Hitting a **ServiceQuotaExceededException** means your request would exceed an AWS Service Quota (formerly soft limits)—you've reached the maximum allowed for a specific service quota like EC2 instances, DynamoDB tables, or IAM roles. This client-side error (4xx) happens when AWS enforces service quotas. Most common when creating too many EC2 instances or DynamoDB tables, but also appears when regional quotas are exceeded, account-level quotas are hit, or quotas haven't been increased from defaults.`,
+      description: `Hitting a ServiceQuotaExceededException means your request would exceed an AWS Service Quota (formerly soft limits)—you've reached the maximum allowed for a specific service quota like EC2 instances, DynamoDB tables, or IAM roles. This client-side error (4xx) happens when AWS enforces service quotas. Most common when creating too many EC2 instances or DynamoDB tables, but also appears when regional quotas are exceeded, account-level quotas are hit, or quotas haven't been increased from defaults.`,
       metaDescription: 'Resolve ServiceQuotaExceededException by checking current quota usage, requesting quota increases, deleting unused resources, or using different regions with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM role/user quota exceeded. Service Control Policy (SCP) enforces lower quotas. Account-level restrictions active.`,
@@ -2602,7 +2602,7 @@ fi`,
     'Unavailable': {
       code: 'Unavailable',
       name: 'Service Unavailable',
-      description: `Getting an **Unavailable** error means the AWS service is temporarily down or overloaded—this is a server-side issue (5xx) that usually resolves with retries. This server-side error happens when AWS services are experiencing outages, maintenance, or capacity issues. Most common during AWS service outages, but also appears when services are in maintenance mode, regions are experiencing issues, services are overloaded, or temporary capacity constraints occur.`,
+      description: `Getting an Unavailable error means the AWS service is temporarily down or overloaded—this is a server-side issue (5xx) that usually resolves with retries. This server-side error happens when AWS services are experiencing outages, maintenance, or capacity issues. Most common during AWS service outages, but also appears when services are in maintenance mode, regions are experiencing issues, services are overloaded, or temporary capacity constraints occur.`,
       metaDescription: 'Resolve Unavailable errors by implementing exponential backoff retries, checking AWS status pages, trying different regions, and monitoring service health with our AWS guide.',
       causes: [
         `Identity: IAM service temporarily unavailable. Service Control Policy (SCP) service down. Account-level service restrictions.`,
@@ -2662,7 +2662,7 @@ retry_with_backoff() {
       attempt=\$((attempt + 1))
       if [ \$attempt -lt \${max_retries} ]; then
         # Exponential backoff with jitter
-        delay=\$((2 ** attempt + RANDOM % 1000 / 1000))
+        delay=\$((2  attempt + RANDOM % 1000 / 1000))
         echo "Service unavailable, retrying in \${delay}s (attempt \${attempt}/\${max_retries})..."
         sleep \${delay}
         continue
@@ -2710,7 +2710,7 @@ done`,
     'InvalidAction': {
       code: 'InvalidAction',
       name: 'Invalid Action',
-      description: `Hitting an **InvalidAction** error means the AWS API action you're trying to call doesn't exist or isn't supported by that service—the action name might be misspelled, it's not available for that service, or there's an API version mismatch. This client-side error (4xx) happens when AWS validates action names. Most common when action names are misspelled, but also appears when actions aren't supported by the service, actions are called on wrong services, API versions don't match, or service endpoints are incorrect.`,
+      description: `Hitting an InvalidAction error means the AWS API action you're trying to call doesn't exist or isn't supported by that service—the action name might be misspelled, it's not available for that service, or there's an API version mismatch. This client-side error (4xx) happens when AWS validates action names. Most common when action names are misspelled, but also appears when actions aren't supported by the service, actions are called on wrong services, API versions don't match, or service endpoints are incorrect.`,
       metaDescription: 'Fix InvalidAction by verifying action names, checking service support, reviewing API documentation, and ensuring correct API versions with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy action restrictions. Service Control Policy (SCP) blocks specific actions.`,
@@ -2815,7 +2815,7 @@ fi`,
     'InvalidRequest': {
       code: 'InvalidRequest',
       name: 'Invalid Request',
-      description: `Getting an **InvalidRequest** error means your AWS API request has invalid structure or format—the request might be malformed, missing required elements, or have syntax errors. This client-side error (4xx) happens when AWS validates request structure. Most common when JSON request bodies are malformed, but also appears when request structure is invalid, required elements are missing, request format doesn't match API requirements, or request validation fails.`,
+      description: `Getting an InvalidRequest error means your AWS API request has invalid structure or format—the request might be malformed, missing required elements, or have syntax errors. This client-side error (4xx) happens when AWS validates request structure. Most common when JSON request bodies are malformed, but also appears when request structure is invalid, required elements are missing, request format doesn't match API requirements, or request validation fails.`,
       metaDescription: 'Fix InvalidRequest by validating request format, checking request structure, including required elements, and verifying request syntax with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM policy request restrictions. Service Control Policy (SCP) blocks request format.`,
@@ -2927,7 +2927,7 @@ echo "  --count 1"`,
     'OptInRequired': {
       code: 'OptInRequired',
       name: 'Opt In Required',
-      description: `Getting an **OptInRequired** error means you need to opt in to an AWS service or feature before using it—some AWS services require explicit opt-in, especially new regions, Local Zones, Wavelength Zones, or certain features. This client-side error (4xx) happens when AWS requires explicit acceptance. Most common when using new AWS regions, but also appears when Local Zones require opt-in, Wavelength Zones need activation, certain features require acceptance, or service agreements haven't been completed.`,
+      description: `Getting an OptInRequired error means you need to opt in to an AWS service or feature before using it—some AWS services require explicit opt-in, especially new regions, Local Zones, Wavelength Zones, or certain features. This client-side error (4xx) happens when AWS requires explicit acceptance. Most common when using new AWS regions, but also appears when Local Zones require opt-in, Wavelength Zones need activation, certain features require acceptance, or service agreements haven't been completed.`,
       metaDescription: 'Fix OptInRequired by completing service opt-in, enabling features, accepting terms of service, and opting in to regions with our AWS troubleshooting guide.',
       causes: [
         `Identity: IAM permissions allow but opt-in not completed. Service Control Policy (SCP) requires opt-in. Account-level opt-in restrictions.`,
@@ -3028,7 +3028,7 @@ echo "3. Contact AWS Support (for special cases)"`,
     'AccountProblem': {
       code: 'AccountProblem',
       name: 'Account Problem',
-      description: `Getting an **AccountProblem** error means there's an issue with your AWS account that's blocking operations—your account might be suspended, payment method declined, or verification incomplete. This client-side error (4xx) happens when AWS validates account status. Most common when payment methods are declined, but also appears when accounts are suspended, account verification is incomplete, billing problems prevent operations, or account service limits are reached.`,
+      description: `Getting an AccountProblem error means there's an issue with your AWS account that's blocking operations—your account might be suspended, payment method declined, or verification incomplete. This client-side error (4xx) happens when AWS validates account status. Most common when payment methods are declined, but also appears when accounts are suspended, account verification is incomplete, billing problems prevent operations, or account service limits are reached.`,
       metaDescription: 'Fix AccountProblem by checking account status, verifying payment methods, completing account verification, and reviewing billing settings with our AWS troubleshooting guide.',
       causes: [
         `Identity: Account suspended or disabled. Account verification incomplete. Account in bad standing.`,
@@ -3129,7 +3129,7 @@ echo "4. Describe the problem"`,
     'AmbiguousGrantByEmailAddress': {
       code: 'AmbiguousGrantByEmailAddress',
       name: 'Ambiguous Grant By Email Address',
-      description: `Getting an **AmbiguousGrantByEmailAddress** error means the email address you're using in an IAM policy grant is associated with multiple AWS accounts—AWS can't determine which account you mean, so you must specify the account ID explicitly. This client-side error (4xx) happens when AWS evaluates IAM policy grants. Most common when S3 bucket policies grant access by email, but also appears when IAM policies reference users by email across multiple accounts, cross-account grants use email addresses, or account identifiers are missing from grants.`,
+      description: `Getting an AmbiguousGrantByEmailAddress error means the email address you're using in an IAM policy grant is associated with multiple AWS accounts—AWS can't determine which account you mean, so you must specify the account ID explicitly. This client-side error (4xx) happens when AWS evaluates IAM policy grants. Most common when S3 bucket policies grant access by email, but also appears when IAM policies reference users by email across multiple accounts, cross-account grants use email addresses, or account identifiers are missing from grants.`,
       metaDescription: 'Fix AmbiguousGrantByEmailAddress by specifying AWS account IDs explicitly, using full ARNs instead of emails, and providing unique account identifiers with our AWS troubleshooting guide.',
       causes: [
         `Identity: Email address used by multiple AWS accounts. Account ID not specified in IAM policy grant. Cross-account grant ambiguity.`,
@@ -3253,7 +3253,7 @@ echo "\${POLICY}" | jq '.'`,
     'BadDigest': {
       code: 'BadDigest',
       name: 'Bad Digest',
-      description: `Getting a **BadDigest** error means the Content-MD5 hash you sent doesn't match what AWS calculated from the uploaded data—the file was corrupted during transmission, the MD5 hash was calculated incorrectly, or the file was modified after hashing. This client-side error (4xx) happens when AWS validates data integrity using MD5 checksums. Most common when uploading S3 objects with Content-MD5 headers, but also appears when data corruption occurs during upload, MD5 hashes are calculated incorrectly, network transmission errors corrupt data, or files are modified after hashing.`,
+      description: `Getting a BadDigest error means the Content-MD5 hash you sent doesn't match what AWS calculated from the uploaded data—the file was corrupted during transmission, the MD5 hash was calculated incorrectly, or the file was modified after hashing. This client-side error (4xx) happens when AWS validates data integrity using MD5 checksums. Most common when uploading S3 objects with Content-MD5 headers, but also appears when data corruption occurs during upload, MD5 hashes are calculated incorrectly, network transmission errors corrupt data, or files are modified after hashing.`,
       metaDescription: 'Fix BadDigest by recalculating Content-MD5 hashes, verifying data integrity, checking network stability, and using multipart uploads for large files with our AWS guide.',
       causes: [
         `Identity: IAM policy allows upload but hash validation fails. Service Control Policy (SCP) enforces hash validation.`,
@@ -3384,7 +3384,7 @@ echo "This avoids BadDigest errors from incorrect hash calculation"`,
     'CredentialsNotSupported': {
       code: 'CredentialsNotSupported',
       name: 'Credentials Not Supported',
-      description: `Getting a **CredentialsNotSupported** error means the AWS service doesn't accept the credential type you're using—some operations require specific authentication methods like IAM roles, while others accept access keys. This client-side error (4xx) happens when AWS validates credential types. Most common when using access keys for operations that require IAM roles, but also appears when credential formats are incorrect, services have specific authentication requirements, authentication methods don't match service expectations, or temporary credentials aren't supported for the operation.`,
+      description: `Getting a CredentialsNotSupported error means the AWS service doesn't accept the credential type you're using—some operations require specific authentication methods like IAM roles, while others accept access keys. This client-side error (4xx) happens when AWS validates credential types. Most common when using access keys for operations that require IAM roles, but also appears when credential formats are incorrect, services have specific authentication requirements, authentication methods don't match service expectations, or temporary credentials aren't supported for the operation.`,
       metaDescription: 'Fix CredentialsNotSupported by using IAM roles for EC2/Lambda, checking service-specific authentication requirements, and verifying credential formats with our AWS troubleshooting guide.',
       causes: [
         `Identity: Credential type not supported by operation. IAM role required but access keys used. Service Control Policy (SCP) restricts credential types.`,
@@ -3497,7 +3497,7 @@ echo "4. Check service documentation for required credential type"`,
     'CrossLocationLoggingProhibited': {
       code: 'CrossLocationLoggingProhibited',
       name: 'Cross Location Logging Prohibited',
-      description: `Hitting a **CrossLocationLoggingProhibited** error means you're trying to configure S3 bucket logging where the source bucket and logging bucket are in different AWS regions—S3 requires both buckets to be in the same region for logging. This client-side error (4xx) happens when AWS validates S3 logging configuration. Most common when source and logging buckets are in different regions, but also appears when cross-region logging is attempted, geographic location mismatch occurs, or logging configuration violates S3 region rules.`,
+      description: `Hitting a CrossLocationLoggingProhibited error means you're trying to configure S3 bucket logging where the source bucket and logging bucket are in different AWS regions—S3 requires both buckets to be in the same region for logging. This client-side error (4xx) happens when AWS validates S3 logging configuration. Most common when source and logging buckets are in different regions, but also appears when cross-region logging is attempted, geographic location mismatch occurs, or logging configuration violates S3 region rules.`,
       metaDescription: 'Fix CrossLocationLoggingProhibited by ensuring source and logging buckets are in the same region, creating logging buckets in the correct region, and updating logging configuration with our AWS guide.',
       causes: [
         `Identity: IAM policy allows logging but region mismatch. Service Control Policy (SCP) enforces same-region logging.`,
@@ -3629,7 +3629,7 @@ aws s3api get-bucket-logging --bucket \${SOURCE_BUCKET} --output json`,
     'EntityTooLarge': {
       code: 'EntityTooLarge',
       name: 'Entity Too Large',
-      description: `Hitting an **EntityTooLarge** error means your S3 upload exceeds the 5TB maximum object size limit—S3 allows single objects up to 5TB, but for files larger than 5GB, you should use multipart upload. This client-side error (4xx) happens when AWS validates upload size. Most common when uploading very large files as single objects, but also appears when object size exceeds 5TB limit, files are too large for single upload, or upload size violates S3 limits.`,
+      description: `Hitting an EntityTooLarge error means your S3 upload exceeds the 5TB maximum object size limit—S3 allows single objects up to 5TB, but for files larger than 5GB, you should use multipart upload. This client-side error (4xx) happens when AWS validates upload size. Most common when uploading very large files as single objects, but also appears when object size exceeds 5TB limit, files are too large for single upload, or upload size violates S3 limits.`,
       metaDescription: 'Fix EntityTooLarge by using multipart upload for files >5GB, splitting large files, or using AWS Transfer Family/Snowball for petabyte-scale transfers with our AWS guide.',
       causes: [
         `Identity: IAM policy allows upload but size limit exceeded. Service Control Policy (SCP) enforces size limits.`,
@@ -3710,7 +3710,7 @@ aws s3 ls s3://\${BUCKET_NAME}/\${OBJECT_KEY} --human-readable`,
     'EntityTooSmall': {
       code: 'EntityTooSmall',
       name: 'Entity Too Small',
-      description: `Getting an **EntityTooSmall** error means a multipart upload part is smaller than the 5MB minimum—S3 requires each part (except the last) to be at least 5MB. This client-side error (4xx) happens when AWS validates multipart upload part sizes. Most common when multipart chunk size is set too small, but also appears when part sizes are less than 5MB (except last part), minimum part size is violated, or incorrect multipart chunk size is configured.`,
+      description: `Getting an EntityTooSmall error means a multipart upload part is smaller than the 5MB minimum—S3 requires each part (except the last) to be at least 5MB. This client-side error (4xx) happens when AWS validates multipart upload part sizes. Most common when multipart chunk size is set too small, but also appears when part sizes are less than 5MB (except last part), minimum part size is violated, or incorrect multipart chunk size is configured.`,
       metaDescription: 'Fix EntityTooSmall by ensuring multipart upload parts are at least 5MB (except last), adjusting chunk sizes, or using single upload for small files with our AWS guide.',
       causes: [
         `Identity: IAM policy allows upload but part size invalid. Service Control Policy (SCP) enforces part size limits.`,
@@ -3811,7 +3811,7 @@ done`,
     'ExpiredToken': {
       code: 'ExpiredToken',
       name: 'Expired Token',
-      description: `Getting an **ExpiredToken** error means your temporary AWS credentials (session token) have expired—temporary credentials from STS, IAM roles, or assume role operations expire after a set time period (typically 1 hour, max 12 hours). This client-side error (4xx) happens when AWS validates credential expiration. Most common when temporary credentials expire after 1 hour, but also appears when session tokens expire, STS token expiration time passes, IAM role sessions expire, or token expiration time is reached.`,
+      description: `Getting an ExpiredToken error means your temporary AWS credentials (session token) have expired—temporary credentials from STS, IAM roles, or assume role operations expire after a set time period (typically 1 hour, max 12 hours). This client-side error (4xx) happens when AWS validates credential expiration. Most common when temporary credentials expire after 1 hour, but also appears when session tokens expire, STS token expiration time passes, IAM role sessions expire, or token expiration time is reached.`,
       metaDescription: 'Fix ExpiredToken by refreshing temporary credentials from STS, obtaining new session tokens, renewing IAM role sessions, or implementing automatic token refresh with our AWS guide.',
       causes: [
         `Identity: Temporary credentials expired. IAM role session expired. STS assume role session expired.`,
@@ -3898,7 +3898,7 @@ fi`,
     'IllegalVersioningConfigurationException': {
       code: 'IllegalVersioningConfigurationException',
       name: 'Illegal Versioning Configuration',
-      description: `Hitting an **IllegalVersioningConfigurationException** means your S3 bucket versioning configuration is invalid—the versioning settings might conflict, MFA delete configuration is incorrect, or versioning state transition is invalid. This client-side error (4xx) happens when AWS validates S3 versioning configuration. Most common when MFA delete configuration is incorrect, but also appears when versioning configuration parameters are invalid, conflicting versioning settings exist, versioning state conflicts occur, or invalid versioning transitions are attempted.`,
+      description: `Hitting an IllegalVersioningConfigurationException means your S3 bucket versioning configuration is invalid—the versioning settings might conflict, MFA delete configuration is incorrect, or versioning state transition is invalid. This client-side error (4xx) happens when AWS validates S3 versioning configuration. Most common when MFA delete configuration is incorrect, but also appears when versioning configuration parameters are invalid, conflicting versioning settings exist, versioning state conflicts occur, or invalid versioning transitions are attempted.`,
       metaDescription: 'Fix IllegalVersioningConfigurationException by reviewing versioning parameters, checking MFA delete configuration, and ensuring valid versioning state transitions with our AWS guide.',
       causes: [
         `Identity: IAM policy allows versioning but configuration invalid. Service Control Policy (SCP) restricts versioning settings.`,
@@ -3950,7 +3950,7 @@ aws s3api list-object-versions \\
     'IncompleteBody': {
       code: 'IncompleteBody',
       name: 'Incomplete Body',
-      description: `Getting an **IncompleteBody** error means the Content-Length HTTP header doesn't match the actual request body size—the body is incomplete, truncated, or the header value is wrong. This client-side error (4xx) happens when AWS validates request body completeness. Most common when Content-Length header is incorrect, but also appears when request body is incomplete or truncated, network interruptions occur during upload, body size mismatches the header, or uploads terminate early.`,
+      description: `Getting an IncompleteBody error means the Content-Length HTTP header doesn't match the actual request body size—the body is incomplete, truncated, or the header value is wrong. This client-side error (4xx) happens when AWS validates request body completeness. Most common when Content-Length header is incorrect, but also appears when request body is incomplete or truncated, network interruptions occur during upload, body size mismatches the header, or uploads terminate early.`,
       metaDescription: 'Fix IncompleteBody by verifying Content-Length matches body size exactly, ensuring complete request body is sent, and checking for network interruptions with our AWS guide.',
       causes: [
         `Identity: IAM policy allows upload but body incomplete. Service Control Policy (SCP) enforces body validation.`,
@@ -4048,7 +4048,7 @@ done`,
     'IncorrectNumberOfFilesInPostRequest': {
       code: 'IncorrectNumberOfFilesInPostRequest',
       name: 'Incorrect Number of Files in POST Request',
-      description: `Hitting an **IncorrectNumberOfFilesInPostRequest** error means your POST request has zero files or more than one file—S3 presigned POST requires exactly one file per request. This client-side error (4xx) happens when AWS validates POST request file count. Most common when no file is provided, but also appears when multiple files are included in a single POST, file field is missing from form data, form data structure is incorrect, or POST request format is invalid.`,
+      description: `Hitting an IncorrectNumberOfFilesInPostRequest error means your POST request has zero files or more than one file—S3 presigned POST requires exactly one file per request. This client-side error (4xx) happens when AWS validates POST request file count. Most common when no file is provided, but also appears when multiple files are included in a single POST, file field is missing from form data, form data structure is incorrect, or POST request format is invalid.`,
       metaDescription: 'Fix IncorrectNumberOfFilesInPostRequest by including exactly one file in POST requests, using multipart/form-data with a single file field, and verifying form data structure with our AWS guide.',
       causes: [
         `Identity: IAM policy allows POST but file count invalid. Service Control Policy (SCP) enforces file count limits.`,
@@ -4115,7 +4115,7 @@ echo "✓ All required fields from policy included"`,
     'InlineDataTooLarge': {
       code: 'InlineDataTooLarge',
       name: 'Inline Data Too Large',
-      description: `Getting an **InlineDataTooLarge** error means you're trying to embed file data directly in the request body, but it exceeds the inline data size limit—for large files, you should use multipart upload or presigned URLs instead of inline embedding. This client-side error (4xx) happens when AWS validates inline data size. Most common when large files are embedded in request bodies, but also appears when inline data exceeds size limits, request body is too large for inline upload, or large files are included directly in requests.`,
+      description: `Getting an InlineDataTooLarge error means you're trying to embed file data directly in the request body, but it exceeds the inline data size limit—for large files, you should use multipart upload or presigned URLs instead of inline embedding. This client-side error (4xx) happens when AWS validates inline data size. Most common when large files are embedded in request bodies, but also appears when inline data exceeds size limits, request body is too large for inline upload, or large files are included directly in requests.`,
       metaDescription: 'Fix InlineDataTooLarge by using multipart upload for large files, using presigned URLs for direct S3 uploads, or splitting files into chunks with our AWS guide.',
       causes: [
         `Identity: IAM policy allows upload but inline size exceeded. Service Control Policy (SCP) enforces inline size limits.`,
@@ -4181,7 +4181,7 @@ echo "No inline data in your application request"`,
     'InternalError': {
       code: 'InternalError',
       name: 'Internal Error',
-      description: `Getting an **InternalError** means AWS encountered an internal service error—this is a server-side issue (5xx) that's usually temporary and resolves with retries. This server-side error happens when AWS services experience internal failures. Most common during temporary service issues, but also appears when backend processing errors occur, services are temporarily unavailable, internal system failures happen, or AWS infrastructure experiences problems.`,
+      description: `Getting an InternalError means AWS encountered an internal service error—this is a server-side issue (5xx) that's usually temporary and resolves with retries. This server-side error happens when AWS services experience internal failures. Most common during temporary service issues, but also appears when backend processing errors occur, services are temporarily unavailable, internal system failures happen, or AWS infrastructure experiences problems.`,
       metaDescription: 'Resolve InternalError by implementing exponential backoff retries, checking AWS Service Health Dashboard, and contacting AWS Support if errors persist with our AWS guide.',
       causes: [
         `Identity: IAM service internal error. Service Control Policy (SCP) service failure. Account-level service issues.`,
@@ -4217,7 +4217,7 @@ retry_with_backoff() {
       attempt=\$((attempt + 1))
       if [ \$attempt -lt \${max_retries} ]; then
         # Exponential backoff with jitter: 1s, 2s, 4s, 8s, 16s
-        delay=\$((2 ** attempt + RANDOM % 1000 / 1000))
+        delay=\$((2  attempt + RANDOM % 1000 / 1000))
         echo "Internal error, retrying in \${delay}s (attempt \${attempt}/\${max_retries})..."
         sleep \${delay}
         continue
@@ -4291,7 +4291,7 @@ echo "3. Select service and describe InternalError issue"`,
     'InvalidAddressingHeader': {
       code: 'InvalidAddressingHeader',
       name: 'Invalid Addressing Header',
-      description: `Getting an **InvalidAddressingHeader** error means the HTTP addressing headers in your AWS API request are invalid or malformed—headers like Host, X-Amz-Date, or X-Amz-Target don't match AWS requirements. This client-side error (4xx) happens when AWS validates request headers. Most common when making direct HTTP requests to AWS APIs, but also appears when addressing header format is invalid, required headers are missing, header values are incorrect or malformed, or headers don't match service requirements.`,
+      description: `Getting an InvalidAddressingHeader error means the HTTP addressing headers in your AWS API request are invalid or malformed—headers like Host, X-Amz-Date, or X-Amz-Target don't match AWS requirements. This client-side error (4xx) happens when AWS validates request headers. Most common when making direct HTTP requests to AWS APIs, but also appears when addressing header format is invalid, required headers are missing, header values are incorrect or malformed, or headers don't match service requirements.`,
       metaDescription: 'Fix InvalidAddressingHeader by verifying header formats match AWS specs, checking required headers are present, and using AWS SDK/CLI which handles headers automatically with our AWS guide.',
       causes: [
         `Identity: IAM policy allows request but header invalid. Service Control Policy (SCP) enforces header validation.`,
@@ -4387,7 +4387,7 @@ echo "Better: Use AWS CLI or SDK which handles this automatically"`,
     'InvalidArgument': {
       code: 'InvalidArgument',
       name: 'Invalid Argument',
-      description: `Hitting an **InvalidArgument** error means one or more parameters in your AWS API request have invalid values, types, or formats—the argument might be out of range, wrong type, or unsupported. This client-side error (4xx) happens when AWS validates request parameters. Most common when parameter values are invalid, but also appears when parameter types don't match requirements, arguments are out of valid range, parameter formats are incorrect, or unsupported argument values are used.`,
+      description: `Hitting an InvalidArgument error means one or more parameters in your AWS API request have invalid values, types, or formats—the argument might be out of range, wrong type, or unsupported. This client-side error (4xx) happens when AWS validates request parameters. Most common when parameter values are invalid, but also appears when parameter types don't match requirements, arguments are out of valid range, parameter formats are incorrect, or unsupported argument values are used.`,
       metaDescription: 'Fix InvalidArgument by verifying parameter values, checking parameter types match requirements, reviewing valid ranges, and validating argument formats with our AWS guide.',
       causes: [
         `Identity: IAM policy allows request but argument invalid. Service Control Policy (SCP) enforces argument validation.`,
@@ -4480,7 +4480,7 @@ echo "MinCount: \${MIN_COUNT}, MaxCount: \${MAX_COUNT}"`,
     'S3InvalidObjectState': {
       code: 'S3InvalidObjectState',
       name: 'S3 Invalid Object State',
-      description: `Hitting an **S3InvalidObjectState** error means you're trying to access an S3 object that's archived in Glacier or Deep Archive storage class without restoring it first—archived objects must be restored before they can be accessed. This client-side error (4xx) happens when AWS validates object accessibility. Most common when accessing Glacier objects without restore, but also appears when objects are in Deep Archive, restoration hasn't completed, objects are archived and not restored, or accessing archived objects directly.`,
+      description: `Hitting an S3InvalidObjectState error means you're trying to access an S3 object that's archived in Glacier or Deep Archive storage class without restoring it first—archived objects must be restored before they can be accessed. This client-side error (4xx) happens when AWS validates object accessibility. Most common when accessing Glacier objects without restore, but also appears when objects are in Deep Archive, restoration hasn't completed, objects are archived and not restored, or accessing archived objects directly.`,
       metaDescription: 'Fix S3InvalidObjectState by restoring objects from Glacier/Deep Archive, waiting for restoration to complete, or using appropriate storage classes with our AWS guide.',
       causes: [
         `Identity: IAM policy allows access but object archived. Service Control Policy (SCP) enforces storage class restrictions.`,
@@ -4607,7 +4607,7 @@ echo "After expiry, object returns to archived state"`,
     'LambdaInvalidParameterValueException': {
       code: 'LambdaInvalidParameterValueException',
       name: 'Lambda Invalid Parameter Value',
-      description: `Getting a **LambdaInvalidParameterValueException** means one or more Lambda function parameters have invalid values—function name format, runtime, memory size, timeout, or environment variables don't meet Lambda requirements. This client-side error (4xx) happens when AWS validates Lambda parameters. Most common when memory size is invalid, but also appears when function name format is wrong, runtime specification is invalid, timeout is out of range, or environment variable format is incorrect.`,
+      description: `Getting a LambdaInvalidParameterValueException means one or more Lambda function parameters have invalid values—function name format, runtime, memory size, timeout, or environment variables don't meet Lambda requirements. This client-side error (4xx) happens when AWS validates Lambda parameters. Most common when memory size is invalid, but also appears when function name format is wrong, runtime specification is invalid, timeout is out of range, or environment variable format is incorrect.`,
       metaDescription: 'Fix LambdaInvalidParameterValueException by verifying function names, checking runtime support, ensuring memory (128-10240 MB) and timeout (1-900s) are valid, and validating environment variables with our AWS guide.',
       causes: [
         `Identity: IAM policy allows Lambda creation but parameter invalid. Service Control Policy (SCP) enforces parameter restrictions.`,
@@ -4741,7 +4741,7 @@ echo "Use: aws lambda create-function --runtime \${RUNTIME} ..."`,
     'DynamoDBProvisionedThroughputExceededException': {
       code: 'DynamoDBProvisionedThroughputExceededException',
       name: 'DynamoDB Provisioned Throughput Exceeded',
-      description: `Getting a **DynamoDBProvisionedThroughputExceededException** means your DynamoDB table's provisioned throughput capacity is exceeded—your request rate is higher than the read or write capacity units allocated to the table. This client-side error (4xx) happens when AWS throttles requests due to capacity limits. Most common when read/write capacity is exceeded, but also appears when hot partitions cause throttling, provisioned capacity is insufficient, sudden traffic spikes occur, or load isn't distributed across partition keys.`,
+      description: `Getting a DynamoDBProvisionedThroughputExceededException means your DynamoDB table's provisioned throughput capacity is exceeded—your request rate is higher than the read or write capacity units allocated to the table. This client-side error (4xx) happens when AWS throttles requests due to capacity limits. Most common when read/write capacity is exceeded, but also appears when hot partitions cause throttling, provisioned capacity is insufficient, sudden traffic spikes occur, or load isn't distributed across partition keys.`,
       metaDescription: 'Fix DynamoDBProvisionedThroughputExceededException by increasing provisioned capacity, enabling auto-scaling, implementing exponential backoff, or switching to on-demand billing with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB access but capacity exceeded. Service Control Policy (SCP) enforces capacity limits.`,
@@ -4857,7 +4857,7 @@ echo "- Best for unpredictable workloads"`,
     'S3BucketAlreadyOwnedByYou': {
       code: 'S3BucketAlreadyOwnedByYou',
       name: 'S3 Bucket Already Owned By You',
-      description: `Hitting an **S3BucketAlreadyOwnedByYou** error means the S3 bucket name you're trying to create already exists in your AWS account—S3 bucket names must be globally unique across all AWS accounts, so if you own a bucket with that name, you can't create another. This client-side error (4xx) happens when AWS validates bucket name uniqueness. Most common when bucket name already exists in your account, but also appears when attempting to create a duplicate bucket, bucket name collision occurs, previous bucket creation succeeded, or bucket exists in a different region.`,
+      description: `Hitting an S3BucketAlreadyOwnedByYou error means the S3 bucket name you're trying to create already exists in your AWS account—S3 bucket names must be globally unique across all AWS accounts, so if you own a bucket with that name, you can't create another. This client-side error (4xx) happens when AWS validates bucket name uniqueness. Most common when bucket name already exists in your account, but also appears when attempting to create a duplicate bucket, bucket name collision occurs, previous bucket creation succeeded, or bucket exists in a different region.`,
       metaDescription: 'Fix S3BucketAlreadyOwnedByYou by using a different bucket name, checking if bucket exists before creating, or deleting the existing bucket if no longer needed with our AWS guide.',
       causes: [
         `Identity: IAM policy allows bucket creation but name exists. Service Control Policy (SCP) enforces bucket naming.`,
@@ -4985,7 +4985,7 @@ fi`,
     'LambdaResourceNotFoundException': {
       code: 'LambdaResourceNotFoundException',
       name: 'Lambda Resource Not Found',
-      description: `Getting a **LambdaResourceNotFoundException** means the Lambda function, layer, or event source mapping you're referencing doesn't exist—the resource might have been deleted, the name is misspelled, or it's in a different region. This client-side error (4xx) happens when AWS validates Lambda resource existence. Most common when function names are misspelled, but also appears when functions are deleted, incorrect regions are specified, functions don't exist, or layers/event sources are not found.`,
+      description: `Getting a LambdaResourceNotFoundException means the Lambda function, layer, or event source mapping you're referencing doesn't exist—the resource might have been deleted, the name is misspelled, or it's in a different region. This client-side error (4xx) happens when AWS validates Lambda resource existence. Most common when function names are misspelled, but also appears when functions are deleted, incorrect regions are specified, functions don't exist, or layers/event sources are not found.`,
       metaDescription: 'Fix LambdaResourceNotFoundException by verifying function names, checking correct regions, listing all functions to find correct names, and verifying resources exist with our AWS guide.',
       causes: [
         `Identity: IAM policy allows Lambda access but resource doesn't exist. Service Control Policy (SCP) restricts resource access.`,
@@ -5091,7 +5091,7 @@ echo "Or use CloudWatch Logs to see function activity"`,
     'DynamoDBResourceNotFoundException': {
       code: 'DynamoDBResourceNotFoundException',
       name: 'DynamoDB Resource Not Found',
-      description: `Getting a **DynamoDBResourceNotFoundException** means the DynamoDB table, index, or stream you're referencing doesn't exist—the resource might have been deleted, the name is misspelled, or it's in a different region. This client-side error (4xx) happens when AWS validates DynamoDB resource existence. Most common when table names are misspelled, but also appears when tables don't exist, tables are deleted, incorrect regions are specified, or indexes/streams are not found.`,
+      description: `Getting a DynamoDBResourceNotFoundException means the DynamoDB table, index, or stream you're referencing doesn't exist—the resource might have been deleted, the name is misspelled, or it's in a different region. This client-side error (4xx) happens when AWS validates DynamoDB resource existence. Most common when table names are misspelled, but also appears when tables don't exist, tables are deleted, incorrect regions are specified, or indexes/streams are not found.`,
       metaDescription: 'Fix DynamoDBResourceNotFoundException by verifying table names, listing all tables to find correct names, checking correct regions, and verifying resources exist with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB access but resource doesn't exist. Service Control Policy (SCP) restricts resource access.`,
@@ -5205,7 +5205,7 @@ fi`,
     'S3InvalidBucketName': {
       code: 'S3InvalidBucketName',
       name: 'S3 Invalid Bucket Name',
-      description: `Hitting an **S3InvalidBucketName** error means your S3 bucket name doesn't follow AWS naming rules—bucket names must be 3-63 characters, lowercase, alphanumeric with hyphens/periods, and globally unique. This client-side error (4xx) happens when AWS validates bucket name format. Most common when bucket names are too short/long, but also appears when invalid characters are used, names start/end with period or hyphen, uppercase letters are included, or consecutive periods exist.`,
+      description: `Hitting an S3InvalidBucketName error means your S3 bucket name doesn't follow AWS naming rules—bucket names must be 3-63 characters, lowercase, alphanumeric with hyphens/periods, and globally unique. This client-side error (4xx) happens when AWS validates bucket name format. Most common when bucket names are too short/long, but also appears when invalid characters are used, names start/end with period or hyphen, uppercase letters are included, or consecutive periods exist.`,
       metaDescription: 'Fix S3InvalidBucketName by ensuring bucket names are 3-63 characters, lowercase, alphanumeric with hyphens/periods, and follow DNS naming conventions with our AWS guide.',
       causes: [
         `Identity: IAM policy allows bucket creation but name invalid. Service Control Policy (SCP) enforces naming rules.`,
@@ -5274,7 +5274,7 @@ validate_bucket_name "-my-bucket"     # Invalid (starts with hyphen)`,
     'LambdaServiceException': {
       code: 'LambdaServiceException',
       name: 'Lambda Service Exception',
-      description: `Getting a **LambdaServiceException** means AWS Lambda encountered an internal service error—this is a server-side issue (5xx) that's usually temporary and resolves with retries. This server-side error happens when Lambda services experience internal failures. Most common during temporary service issues, but also appears when services are temporarily unavailable, Lambda is overloaded, regional service issues occur, or transient infrastructure problems happen.`,
+      description: `Getting a LambdaServiceException means AWS Lambda encountered an internal service error—this is a server-side issue (5xx) that's usually temporary and resolves with retries. This server-side error happens when Lambda services experience internal failures. Most common during temporary service issues, but also appears when services are temporarily unavailable, Lambda is overloaded, regional service issues occur, or transient infrastructure problems happen.`,
       metaDescription: 'Resolve LambdaServiceException by implementing exponential backoff retries, checking AWS Service Health Dashboard, trying different regions, or contacting AWS Support with our AWS guide.',
       causes: [
         `Identity: IAM service internal error. Service Control Policy (SCP) service failure. Account-level Lambda service issues.`,
@@ -5387,7 +5387,7 @@ aws cloudwatch get-metric-statistics \\
     'DynamoDBConditionalCheckFailedException': {
       code: 'DynamoDBConditionalCheckFailedException',
       name: 'DynamoDB Conditional Check Failed',
-      description: `Getting a **DynamoDBConditionalCheckFailedException** means your conditional write operation (PutItem, UpdateItem, DeleteItem) failed because the condition expression evaluated to false—the item doesn't match your expected state, doesn't exist when expected, or was modified by another operation. This client-side error (4xx) happens when AWS validates conditional expressions. Most common when item attribute values don't match expectations, but also appears when items don't exist when expected, version checks fail, optimistic locking conflicts occur, or condition expressions are incorrect.`,
+      description: `Getting a DynamoDBConditionalCheckFailedException means your conditional write operation (PutItem, UpdateItem, DeleteItem) failed because the condition expression evaluated to false—the item doesn't match your expected state, doesn't exist when expected, or was modified by another operation. This client-side error (4xx) happens when AWS validates conditional expressions. Most common when item attribute values don't match expectations, but also appears when items don't exist when expected, version checks fail, optimistic locking conflicts occur, or condition expressions are incorrect.`,
       metaDescription: 'Fix DynamoDBConditionalCheckFailedException by verifying condition expressions, checking item state, implementing retry logic for optimistic locking, or using transaction writes with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB write but condition fails. Service Control Policy (SCP) enforces conditional checks.`,
@@ -5504,7 +5504,7 @@ for ATTEMPT in \$(seq 1 \${MAX_RETRIES}); do
     break
   else
     if [ \${ATTEMPT} -lt \${MAX_RETRIES} ]; then
-      DELAY=\$((2 ** ATTEMPT))
+      DELAY=\$((2  ATTEMPT))
       echo "✗ Update failed, retrying in \${DELAY}s..."
       sleep \${DELAY}
     else
@@ -5520,7 +5520,7 @@ done`,
     'S3InvalidAccessKeyId': {
       code: 'S3InvalidAccessKeyId',
       name: 'S3 Invalid Access Key ID',
-      description: `Hitting an **S3InvalidAccessKeyId** error means your AWS access key ID doesn't exist or is invalid—the access key might have been deleted, rotated, or belongs to a different AWS account. This client-side error (4xx) happens when AWS validates S3 request credentials. Most common when access keys are deleted or rotated, but also appears when access key IDs are incorrect, credentials files are misconfigured, wrong AWS account credentials are used, or old keys are still in use after rotation.`,
+      description: `Hitting an S3InvalidAccessKeyId error means your AWS access key ID doesn't exist or is invalid—the access key might have been deleted, rotated, or belongs to a different AWS account. This client-side error (4xx) happens when AWS validates S3 request credentials. Most common when access keys are deleted or rotated, but also appears when access key IDs are incorrect, credentials files are misconfigured, wrong AWS account credentials are used, or old keys are still in use after rotation.`,
       metaDescription: 'Fix S3InvalidAccessKeyId by verifying access key IDs, checking credentials files, regenerating keys if needed, and updating credentials after rotation with our AWS guide.',
       causes: [
         `Identity: Access key ID doesn't exist in AWS. Access key was deleted from IAM user. Access key belongs to different AWS account.`,
@@ -5634,7 +5634,7 @@ aws configure list`,
     'LambdaInvalidRequestContentException': {
       code: 'LambdaInvalidRequestContentException',
       name: 'Lambda Invalid Request Content',
-      description: `Getting a **LambdaInvalidRequestContentException** means your Lambda function invocation payload is invalid—the JSON is malformed, exceeds the 6MB limit, or has encoding issues. This client-side error (4xx) happens when AWS validates Lambda invocation payloads. Most common when JSON format is invalid, but also appears when request payloads exceed 6MB limit, JSON structure is malformed, encoding issues occur, or unsupported content types are used.`,
+      description: `Getting a LambdaInvalidRequestContentException means your Lambda function invocation payload is invalid—the JSON is malformed, exceeds the 6MB limit, or has encoding issues. This client-side error (4xx) happens when AWS validates Lambda invocation payloads. Most common when JSON format is invalid, but also appears when request payloads exceed 6MB limit, JSON structure is malformed, encoding issues occur, or unsupported content types are used.`,
       metaDescription: 'Fix LambdaInvalidRequestContentException by validating JSON format, ensuring payloads are under 6MB, checking JSON syntax, and using proper UTF-8 encoding with our AWS guide.',
       causes: [
         `Identity: IAM policy allows Lambda invocation but payload invalid. Service Control Policy (SCP) enforces payload validation.`,
@@ -5805,7 +5805,7 @@ fi`,
     'DynamoDBItemCollectionSizeLimitExceededException': {
       code: 'DynamoDBItemCollectionSizeLimitExceededException',
       name: 'DynamoDB Item Collection Size Limit Exceeded',
-      description: `Hitting a **DynamoDBItemCollectionSizeLimitExceededException** means a single item collection (all items sharing the same partition key) exceeds the 10GB limit—this typically happens with Local Secondary Indexes (LSI) or Global Secondary Indexes (GSI) when too many items share the same partition key. This client-side error (4xx) happens when AWS enforces DynamoDB collection size limits. Most common when hot partitions have excessive data, but also appears when LSI/GSI exceeds 10GB, too many items share the same partition key, or index size limits are reached.`,
+      description: `Hitting a DynamoDBItemCollectionSizeLimitExceededException means a single item collection (all items sharing the same partition key) exceeds the 10GB limit—this typically happens with Local Secondary Indexes (LSI) or Global Secondary Indexes (GSI) when too many items share the same partition key. This client-side error (4xx) happens when AWS enforces DynamoDB collection size limits. Most common when hot partitions have excessive data, but also appears when LSI/GSI exceeds 10GB, too many items share the same partition key, or index size limits are reached.`,
       metaDescription: 'Fix DynamoDBItemCollectionSizeLimitExceededException by redesigning partition keys, splitting collections across partitions, archiving old data, or removing unused indexes with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB operations but collection size exceeded. Service Control Policy (SCP) enforces collection limits.`,
@@ -5916,7 +5916,7 @@ echo "4. Archive or delete old table"`,
     'S3NoSuchBucket': {
       code: 'S3NoSuchBucket',
       name: 'S3 No Such Bucket',
-      description: `Getting an **S3NoSuchBucket** error means the S3 bucket you're trying to access doesn't exist—the bucket might have been deleted, the name is misspelled, or it's in a different region or AWS account. This client-side error (4xx) happens when AWS validates bucket existence. Most common when bucket names are misspelled, but also appears when buckets don't exist, buckets are deleted, incorrect regions are specified, or buckets are in different AWS accounts.`,
+      description: `Getting an S3NoSuchBucket error means the S3 bucket you're trying to access doesn't exist—the bucket might have been deleted, the name is misspelled, or it's in a different region or AWS account. This client-side error (4xx) happens when AWS validates bucket existence. Most common when bucket names are misspelled, but also appears when buckets don't exist, buckets are deleted, incorrect regions are specified, or buckets are in different AWS accounts.`,
       metaDescription: 'Fix S3NoSuchBucket by verifying bucket names, listing all buckets to find correct names, checking correct regions, and confirming bucket ownership with our AWS guide.',
       causes: [
         `Identity: IAM policy allows S3 access but bucket doesn't exist. Service Control Policy (SCP) restricts bucket access.`,
@@ -6034,7 +6034,7 @@ fi`,
     'LambdaEC2AccessDeniedException': {
       code: 'LambdaEC2AccessDeniedException',
       name: 'Lambda EC2 Access Denied',
-      description: `Getting a **LambdaEC2AccessDeniedException** means your Lambda function can't access VPC or EC2 resources—the Lambda execution role lacks EC2 permissions to create/manage network interfaces, or security groups/NACLs are blocking access. This client-side error (4xx) happens when AWS validates Lambda VPC permissions. Most common when Lambda execution role lacks EC2 permissions, but also appears when security group rules are too restrictive, network ACLs block access, route tables are misconfigured, or ENI creation fails.`,
+      description: `Getting a LambdaEC2AccessDeniedException means your Lambda function can't access VPC or EC2 resources—the Lambda execution role lacks EC2 permissions to create/manage network interfaces, or security groups/NACLs are blocking access. This client-side error (4xx) happens when AWS validates Lambda VPC permissions. Most common when Lambda execution role lacks EC2 permissions, but also appears when security group rules are too restrictive, network ACLs block access, route tables are misconfigured, or ENI creation fails.`,
       metaDescription: 'Fix LambdaEC2AccessDeniedException by granting Lambda VPC execution role EC2 permissions, configuring security groups, reviewing NACLs, and verifying route tables with our AWS guide.',
       causes: [
         `Identity: Lambda execution role lacks EC2 permissions (ec2:CreateNetworkInterface, ec2:DescribeNetworkInterfaces, ec2:DeleteNetworkInterface). IAM policy doesn't allow VPC access. Service Control Policy (SCP) restricts EC2 access.`,
@@ -6176,7 +6176,7 @@ done`,
     'DynamoDBTransactionConflictException': {
       code: 'DynamoDBTransactionConflictException',
       name: 'DynamoDB Transaction Conflict',
-      description: `Getting a **DynamoDBTransactionConflictException** means your DynamoDB transaction conflicted with another concurrent transaction on the same items—DynamoDB transactions are atomic and cannot be modified while in progress. This client-side error (4xx) happens when AWS detects transaction conflicts. Most common when concurrent transactions operate on the same items, but also appears when transactions are already in progress, optimistic locking fails, or transaction timeouts occur.`,
+      description: `Getting a DynamoDBTransactionConflictException means your DynamoDB transaction conflicted with another concurrent transaction on the same items—DynamoDB transactions are atomic and cannot be modified while in progress. This client-side error (4xx) happens when AWS detects transaction conflicts. Most common when concurrent transactions operate on the same items, but also appears when transactions are already in progress, optimistic locking fails, or transaction timeouts occur.`,
       metaDescription: 'Fix DynamoDBTransactionConflictException by implementing exponential backoff retries, reducing transaction scope, using conditional expressions, or checking for ongoing transactions with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB transactions but conflict occurs. Service Control Policy (SCP) enforces transaction limits.`,
@@ -6227,7 +6227,7 @@ for ATTEMPT in \$(seq 1 \${MAX_RETRIES}); do
   else
     if [ \${ATTEMPT} -lt \${MAX_RETRIES} ]; then
       # Exponential backoff: 10ms, 20ms, 40ms, 80ms, 160ms
-      DELAY_MS=\$((10 * (2 ** (ATTEMPT - 1))))
+      DELAY_MS=\$((10 * (2  (ATTEMPT - 1))))
       DELAY_SEC=\$(echo "scale=3; \${DELAY_MS} / 1000" | bc)
       echo "✗ Transaction conflict, retrying in \${DELAY_SEC}s..."
       sleep \${DELAY_SEC}
@@ -6272,7 +6272,7 @@ echo "  --expression-attribute-values '{\":status\":{\"S\":\"active\"}}'"`,
     'LambdaENILimitReachedException': {
       code: 'LambdaENILimitReachedException',
       name: 'Lambda ENI Limit Reached',
-      description: `Hitting a **LambdaENILimitReachedException** means your AWS account has reached the maximum number of Elastic Network Interfaces (ENIs) that can be created in the region—this happens when too many Lambda functions are configured to use VPCs, and each concurrent execution creates an ENI. This client-side error (4xx) happens when AWS enforces ENI limits. Most common when too many Lambda functions use VPCs, but also appears when concurrent executions create too many ENIs, ENIs aren't cleaned up properly, or account-level ENI limits are reached.`,
+      description: `Hitting a LambdaENILimitReachedException means your AWS account has reached the maximum number of Elastic Network Interfaces (ENIs) that can be created in the region—this happens when too many Lambda functions are configured to use VPCs, and each concurrent execution creates an ENI. This client-side error (4xx) happens when AWS enforces ENI limits. Most common when too many Lambda functions use VPCs, but also appears when concurrent executions create too many ENIs, ENIs aren't cleaned up properly, or account-level ENI limits are reached.`,
       metaDescription: 'Fix LambdaENILimitReachedException by reducing Lambda functions in VPC, requesting ENI limit increases, using VPC endpoints, or optimizing concurrency settings with our AWS guide.',
       causes: [
         `Identity: IAM policy allows Lambda VPC but ENI limit reached. Service Control Policy (SCP) enforces ENI limits.`,
@@ -6382,7 +6382,7 @@ fi`,
     'DynamoDBValidationException': {
       code: 'DynamoDBValidationException',
       name: 'DynamoDB Validation Exception',
-      description: `Getting a **DynamoDBValidationException** means your DynamoDB request input doesn't satisfy DynamoDB constraints—attribute names, types, or expression syntax are invalid. This client-side error (4xx) happens when AWS validates DynamoDB request parameters. Most common when invalid attribute names are used in expressions, but also appears when expression syntax is invalid, attribute types don't match schema, reserved words are used as attribute names, or key schemas are invalid.`,
+      description: `Getting a DynamoDBValidationException means your DynamoDB request input doesn't satisfy DynamoDB constraints—attribute names, types, or expression syntax are invalid. This client-side error (4xx) happens when AWS validates DynamoDB request parameters. Most common when invalid attribute names are used in expressions, but also appears when expression syntax is invalid, attribute types don't match schema, reserved words are used as attribute names, or key schemas are invalid.`,
       metaDescription: 'Fix DynamoDBValidationException by using ExpressionAttributeNames for reserved words, verifying expression syntax, checking attribute types match schema, and validating key schemas with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB operations but validation fails. Service Control Policy (SCP) enforces validation rules.`,
@@ -6491,7 +6491,7 @@ echo "4. Invalid attribute type in ExpressionAttributeValues"`,
     'S3InvalidStorageClass': {
       code: 'S3InvalidStorageClass',
       name: 'S3 Invalid Storage Class',
-      description: `Hitting an **S3InvalidStorageClass** error means the S3 storage class you specified is invalid or not supported for the operation—the storage class name might be misspelled, not available in your region, or not supported for the specific operation. This client-side error (4xx) happens when AWS validates S3 storage class names. Most common when storage class names are misspelled, but also appears when storage classes aren't supported in the region, storage class transitions aren't allowed, or unsupported storage classes are used for operations.`,
+      description: `Hitting an S3InvalidStorageClass error means the S3 storage class you specified is invalid or not supported for the operation—the storage class name might be misspelled, not available in your region, or not supported for the specific operation. This client-side error (4xx) happens when AWS validates S3 storage class names. Most common when storage class names are misspelled, but also appears when storage classes aren't supported in the region, storage class transitions aren't allowed, or unsupported storage classes are used for operations.`,
       metaDescription: 'Fix S3InvalidStorageClass by verifying storage class names, checking regional availability, using supported classes (STANDARD, GLACIER, DEEP_ARCHIVE), and reviewing transition rules with our AWS guide.',
       causes: [
         `Identity: IAM policy allows S3 operations but storage class invalid. Service Control Policy (SCP) enforces storage class restrictions.`,
@@ -6591,7 +6591,7 @@ aws s3api list-objects-v2 \\
     'LambdaSubnetIPAddressLimitReachedException': {
       code: 'LambdaSubnetIPAddressLimitReachedException',
       name: 'Lambda Subnet IP Address Limit Reached',
-      description: `Hitting a **LambdaSubnetIPAddressLimitReachedException** means your Lambda functions have exhausted the available IP addresses in the VPC subnet—each concurrent Lambda execution in a VPC requires an IP address, and the subnet's CIDR block doesn't have enough available. This client-side error (4xx) happens when AWS enforces subnet IP address limits. Most common when subnet CIDR blocks are too small, but also appears when too many concurrent Lambda executions occur, IP addresses aren't released properly, subnets are near capacity, or multiple Lambda functions share the same subnet.`,
+      description: `Hitting a LambdaSubnetIPAddressLimitReachedException means your Lambda functions have exhausted the available IP addresses in the VPC subnet—each concurrent Lambda execution in a VPC requires an IP address, and the subnet's CIDR block doesn't have enough available. This client-side error (4xx) happens when AWS enforces subnet IP address limits. Most common when subnet CIDR blocks are too small, but also appears when too many concurrent Lambda executions occur, IP addresses aren't released properly, subnets are near capacity, or multiple Lambda functions share the same subnet.`,
       metaDescription: 'Fix LambdaSubnetIPAddressLimitReachedException by increasing subnet CIDR blocks, adding additional subnets, reducing Lambda concurrency, or distributing functions across subnets with our AWS guide.',
       causes: [
         `Identity: IAM policy allows Lambda VPC but subnet IP limit reached. Service Control Policy (SCP) enforces subnet limits.`,
@@ -6714,7 +6714,7 @@ fi`,
     'DynamoDBLimitExceededException': {
       code: 'DynamoDBLimitExceededException',
       name: 'DynamoDB Limit Exceeded',
-      description: `Getting a **DynamoDBLimitExceededException** means you've exceeded DynamoDB's account-level or operation-level limits—the number of concurrent table requests, tables per account, indexes per table, or concurrent modifications has reached the maximum allowed. This client-side error (4xx) happens when AWS enforces DynamoDB limits. Most common when too many concurrent table operations occur, but also appears when table limits per account are exceeded, index limits per table are reached, concurrent modification limits are hit, or account-level limits are exceeded.`,
+      description: `Getting a DynamoDBLimitExceededException means you've exceeded DynamoDB's account-level or operation-level limits—the number of concurrent table requests, tables per account, indexes per table, or concurrent modifications has reached the maximum allowed. This client-side error (4xx) happens when AWS enforces DynamoDB limits. Most common when too many concurrent table operations occur, but also appears when table limits per account are exceeded, index limits per table are reached, concurrent modification limits are hit, or account-level limits are exceeded.`,
       metaDescription: 'Fix DynamoDBLimitExceededException by reducing concurrent operations, requesting limit increases, using batch operations, implementing throttling, or optimizing table/index count with our AWS guide.',
       causes: [
         `Identity: IAM policy allows DynamoDB operations but limit exceeded. Service Control Policy (SCP) enforces DynamoDB limits.`,
@@ -6834,7 +6834,7 @@ echo "3. Helps avoid DynamoDBLimitExceededException"`,
     'EC2InstanceLimitExceeded': {
       code: 'EC2InstanceLimitExceeded',
       name: 'EC2 Instance Limit Exceeded',
-      description: `Hitting an **EC2InstanceLimitExceeded** error means you've reached the maximum number of EC2 instances you can launch in the specified region—this limit applies to the total number of running instances across all instance types. This client-side error (4xx) happens when AWS enforces EC2 instance limits. Most common when account-level instance limits are reached, but also appears when region-specific limits are exceeded, too many instances are running, instance type limits are hit, or VPC instance limits are reached.`,
+      description: `Hitting an EC2InstanceLimitExceeded error means you've reached the maximum number of EC2 instances you can launch in the specified region—this limit applies to the total number of running instances across all instance types. This client-side error (4xx) happens when AWS enforces EC2 instance limits. Most common when account-level instance limits are reached, but also appears when region-specific limits are exceeded, too many instances are running, instance type limits are hit, or VPC instance limits are reached.`,
       metaDescription: 'Fix EC2InstanceLimitExceeded by requesting limit increases, terminating unused instances, using different regions, or optimizing instance usage with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 launch but instance limit reached. Service Control Policy (SCP) enforces instance limits.`,
@@ -6944,7 +6944,7 @@ echo "aws ec2 describe-instances --instance-ids i-XXXXX"`,
     'EC2InsufficientInstanceCapacity': {
       code: 'EC2InsufficientInstanceCapacity',
       name: 'EC2 Insufficient Instance Capacity',
-      description: `Getting an **EC2InsufficientInstanceCapacity** error means AWS doesn't have enough available capacity in the Availability Zone you requested to fulfill your instance launch—this is a temporary capacity issue, not a quota limit. This server-side error (5xx) happens when AWS validates instance capacity availability. Most common when Availability Zone capacity is exhausted, but also appears when requested instance types are unavailable, high demand occurs in the region, Spot instance capacity is insufficient, or dedicated host capacity is unavailable.`,
+      description: `Getting an EC2InsufficientInstanceCapacity error means AWS doesn't have enough available capacity in the Availability Zone you requested to fulfill your instance launch—this is a temporary capacity issue, not a quota limit. This server-side error (5xx) happens when AWS validates instance capacity availability. Most common when Availability Zone capacity is exhausted, but also appears when requested instance types are unavailable, high demand occurs in the region, Spot instance capacity is insufficient, or dedicated host capacity is unavailable.`,
       metaDescription: 'Resolve EC2InsufficientInstanceCapacity by trying different Availability Zones, requesting different instance types, using Spot Instances, or waiting and retrying with our AWS guide.',
       causes: [
         `Identity: IAM service capacity issue. Service Control Policy (SCP) service capacity constraints. Account-level capacity restrictions.`,
@@ -7056,7 +7056,7 @@ echo "4. Can be interrupted with 2-minute notice"`,
     'EC2InvalidAMIIDNotFound': {
       code: 'EC2InvalidAMIIDNotFound',
       name: 'EC2 Invalid AMI ID Not Found',
-      description: `Getting an **EC2InvalidAMIIDNotFound** error means the AMI (Amazon Machine Image) ID you specified doesn't exist or isn't available in the current region—the AMI might have been deregistered, is in a different region, or isn't shared with your account. This client-side error (4xx) happens when AWS validates AMI existence. Most common when AMI IDs are incorrect, but also appears when AMIs are in different regions, AMIs have been deregistered, AMI ID formats are incorrect, or AMIs aren't shared with your account.`,
+      description: `Getting an EC2InvalidAMIIDNotFound error means the AMI (Amazon Machine Image) ID you specified doesn't exist or isn't available in the current region—the AMI might have been deregistered, is in a different region, or isn't shared with your account. This client-side error (4xx) happens when AWS validates AMI existence. Most common when AMI IDs are incorrect, but also appears when AMIs are in different regions, AMIs have been deregistered, AMI ID formats are incorrect, or AMIs aren't shared with your account.`,
       metaDescription: 'Fix EC2InvalidAMIIDNotFound by verifying AMI IDs, checking regional availability, listing available AMIs, verifying sharing permissions, or using correct AMI formats with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 launch but AMI doesn't exist. Service Control Policy (SCP) restricts AMI access.`,
@@ -7182,7 +7182,7 @@ fi`,
     'EC2InvalidInstanceIDNotFound': {
       code: 'EC2InvalidInstanceIDNotFound',
       name: 'EC2 Invalid Instance ID Not Found',
-      description: `Getting an **EC2InvalidInstanceIDNotFound** error means the EC2 instance ID you specified doesn't exist or has been terminated—the instance might be in a different region, was deleted, or the ID is misspelled. This client-side error (4xx) happens when AWS validates EC2 instance existence. Most common when instance IDs are incorrect, but also appears when instances have been terminated, instances are in different regions, instance ID formats are incorrect, or instance ID typos occur.`,
+      description: `Getting an EC2InvalidInstanceIDNotFound error means the EC2 instance ID you specified doesn't exist or has been terminated—the instance might be in a different region, was deleted, or the ID is misspelled. This client-side error (4xx) happens when AWS validates EC2 instance existence. Most common when instance IDs are incorrect, but also appears when instances have been terminated, instances are in different regions, instance ID formats are incorrect, or instance ID typos occur.`,
       metaDescription: 'Fix EC2InvalidInstanceIDNotFound by verifying instance IDs, listing all instances to find correct IDs, checking correct regions, and verifying instances exist with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 access but instance doesn't exist. Service Control Policy (SCP) restricts instance access.`,
@@ -7299,7 +7299,7 @@ fi`,
     'EC2UnsupportedOperation': {
       code: 'EC2UnsupportedOperation',
       name: 'EC2 Unsupported Operation',
-      description: `Getting an **EC2UnsupportedOperation** error means the EC2 operation you're trying to perform isn't supported for the specified resource or instance type—the operation might not be available for the current instance configuration, instance state, or instance type. This client-side error (4xx) happens when AWS validates operation compatibility. Most common when operations aren't supported for instance types, but also appears when instance states don't allow operations, features aren't available for instances, instance configurations are incompatible, or operations require different instance types.`,
+      description: `Getting an EC2UnsupportedOperation error means the EC2 operation you're trying to perform isn't supported for the specified resource or instance type—the operation might not be available for the current instance configuration, instance state, or instance type. This client-side error (4xx) happens when AWS validates operation compatibility. Most common when operations aren't supported for instance types, but also appears when instance states don't allow operations, features aren't available for instances, instance configurations are incompatible, or operations require different instance types.`,
       metaDescription: 'Fix EC2UnsupportedOperation by checking instance type support, verifying instance state allows operations, reviewing capabilities, or using supported instance types with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 operation but operation unsupported. Service Control Policy (SCP) restricts operation types.`,
@@ -7414,7 +7414,7 @@ echo "4. Nitro operations on non-Nitro instances"`,
     'IAMEntityAlreadyExists': {
       code: 'IAMEntityAlreadyExists',
       name: 'IAM Entity Already Exists',
-      description: `Hitting an **IAMEntityAlreadyExists** error means the IAM entity (user, group, role, or policy) you're trying to create already exists in your AWS account—IAM entity names must be unique within your account, so you can't create duplicates. This client-side error (4xx) happens when AWS validates IAM entity name uniqueness. Most common when user names already exist, but also appears when role names, group names, or policy names already exist, or duplicate entity creation attempts occur.`,
+      description: `Hitting an IAMEntityAlreadyExists error means the IAM entity (user, group, role, or policy) you're trying to create already exists in your AWS account—IAM entity names must be unique within your account, so you can't create duplicates. This client-side error (4xx) happens when AWS validates IAM entity name uniqueness. Most common when user names already exist, but also appears when role names, group names, or policy names already exist, or duplicate entity creation attempts occur.`,
       metaDescription: 'Fix IAMEntityAlreadyExists by using different entity names, checking if entities exist, deleting unused entities, or using unique naming conventions with our AWS guide.',
       causes: [
         `Identity: IAM entity name already exists in account. Service Control Policy (SCP) enforces entity naming.`,
@@ -7527,7 +7527,7 @@ aws iam list-policies --scope Local \\
     'IAMInvalidUserIDNotFound': {
       code: 'IAMInvalidUserIDNotFound',
       name: 'IAM Invalid User ID Not Found',
-      description: `Getting an **IAMInvalidUserIDNotFound** error means the IAM user you specified doesn't exist—the user might have been deleted, the name is misspelled, or it's in a different AWS account. This client-side error (4xx) happens when AWS validates IAM user existence. Most common when user names are misspelled, but also appears when users don't exist, users have been deleted, incorrect user name formats are used, or users are in different AWS accounts.`,
+      description: `Getting an IAMInvalidUserIDNotFound error means the IAM user you specified doesn't exist—the user might have been deleted, the name is misspelled, or it's in a different AWS account. This client-side error (4xx) happens when AWS validates IAM user existence. Most common when user names are misspelled, but also appears when users don't exist, users have been deleted, incorrect user name formats are used, or users are in different AWS accounts.`,
       metaDescription: 'Fix IAMInvalidUserIDNotFound by verifying user names, listing all users to find correct names, checking if users were deleted, or verifying user existence with our AWS guide.',
       causes: [
         `Identity: IAM user doesn't exist in account. Service Control Policy (SCP) restricts user access.`,
@@ -7625,7 +7625,7 @@ aws iam get-user --user-name \${USER_NAME} 2>&1 | head -3`,
     'IAMMalformedPolicyDocument': {
       code: 'IAMMalformedPolicyDocument',
       name: 'IAM Malformed Policy Document',
-      description: `Getting an **IAMMalformedPolicyDocument** error means your IAM policy document is malformed or invalid—the JSON syntax might be wrong, required policy elements are missing, or the policy statement structure doesn't follow IAM policy language syntax. This client-side error (4xx) happens when AWS validates IAM policy documents. Most common when JSON syntax is invalid, but also appears when required policy elements are missing, policy statement structures are invalid, action or resource values are malformed, or policy document encoding issues occur.`,
+      description: `Getting an IAMMalformedPolicyDocument error means your IAM policy document is malformed or invalid—the JSON syntax might be wrong, required policy elements are missing, or the policy statement structure doesn't follow IAM policy language syntax. This client-side error (4xx) happens when AWS validates IAM policy documents. Most common when JSON syntax is invalid, but also appears when required policy elements are missing, policy statement structures are invalid, action or resource values are malformed, or policy document encoding issues occur.`,
       metaDescription: 'Fix IAMMalformedPolicyDocument by validating JSON syntax, checking policy structure, verifying required fields, using IAM Policy Simulator, or reviewing policy syntax with our AWS guide.',
       causes: [
         `Identity: IAM policy document format invalid. Service Control Policy (SCP) enforces policy validation.`,
@@ -7804,7 +7804,7 @@ fi`,
     'IAMPolicyNotAttachable': {
       code: 'IAMPolicyNotAttachable',
       name: 'IAM Policy Not Attachable',
-      description: `Hitting an **IAMPolicyNotAttachable** error means the IAM policy you're trying to attach cannot be attached to the entity—some AWS managed policies aren't attachable, or the policy type is incompatible with the entity type (user, role, or group). This client-side error (4xx) happens when AWS validates policy attachment compatibility. Most common when AWS managed policies aren't attachable, but also appears when policy types are incompatible with entities, policy attachment restrictions exist, service-linked policy limitations occur, or policies aren't designed for attachment.`,
+      description: `Hitting an IAMPolicyNotAttachable error means the IAM policy you're trying to attach cannot be attached to the entity—some AWS managed policies aren't attachable, or the policy type is incompatible with the entity type (user, role, or group). This client-side error (4xx) happens when AWS validates policy attachment compatibility. Most common when AWS managed policies aren't attachable, but also appears when policy types are incompatible with entities, policy attachment restrictions exist, service-linked policy limitations occur, or policies aren't designed for attachment.`,
       metaDescription: 'Fix IAMPolicyNotAttachable by using attachable policy versions, creating customer managed policies, checking attachment permissions, or verifying policy compatibility with our AWS guide.',
       causes: [
         `Identity: IAM policy attachment restrictions. Service Control Policy (SCP) enforces policy attachment rules.`,
@@ -7929,7 +7929,7 @@ fi`,
     'IAMLimitExceeded': {
       code: 'IAMLimitExceeded',
       name: 'IAM Limit Exceeded',
-      description: `Hitting an **IAMLimitExceeded** error means you've exceeded the maximum number of IAM entities allowed in your AWS account—IAM enforces limits on users (5000), groups (300), roles (5000), and customer managed policies (1500) per account. This client-side error (4xx) happens when AWS validates IAM entity limits. Most common when too many IAM users exist, but also appears when too many groups, roles, or policies are created, or account-level IAM limits are reached.`,
+      description: `Hitting an IAMLimitExceeded error means you've exceeded the maximum number of IAM entities allowed in your AWS account—IAM enforces limits on users (5000), groups (300), roles (5000), and customer managed policies (1500) per account. This client-side error (4xx) happens when AWS validates IAM entity limits. Most common when too many IAM users exist, but also appears when too many groups, roles, or policies are created, or account-level IAM limits are reached.`,
       metaDescription: 'Fix IAMLimitExceeded by deleting unused entities, requesting limit increases, consolidating users into groups, using roles instead of users, or optimizing IAM structure with our AWS guide.',
       causes: [
         `Identity: IAM account limits reached. Service Control Policy (SCP) enforces IAM limits.`,
@@ -8040,7 +8040,7 @@ fi`,
     'CloudFrontInvalidArgument': {
       code: 'CloudFrontInvalidArgument',
       name: 'CloudFront Invalid Argument',
-      description: `Getting a **CloudFrontInvalidArgument** error means one or more arguments in your CloudFront request are invalid—required parameters might be missing, values don't meet CloudFront requirements, or the distribution configuration is malformed. This client-side error (4xx) happens when AWS validates CloudFront request parameters. Most common when distribution configurations are invalid, but also appears when origin settings are wrong, cache behavior settings are invalid, certificate ARNs are malformed, or parameter formats are incorrect.`,
+      description: `Getting a CloudFrontInvalidArgument error means one or more arguments in your CloudFront request are invalid—required parameters might be missing, values don't meet CloudFront requirements, or the distribution configuration is malformed. This client-side error (4xx) happens when AWS validates CloudFront request parameters. Most common when distribution configurations are invalid, but also appears when origin settings are wrong, cache behavior settings are invalid, certificate ARNs are malformed, or parameter formats are incorrect.`,
       metaDescription: 'Fix CloudFrontInvalidArgument by validating distribution configurations, checking origin domain names, verifying certificate ARN formats, reviewing cache behavior settings, or validating parameter values with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but invalid arguments. Service Control Policy (SCP) enforces CloudFront validation.`,
@@ -8190,7 +8190,7 @@ fi`,
     'CloudFrontDistributionAlreadyExists': {
       code: 'CloudFrontDistributionAlreadyExists',
       name: 'CloudFront Distribution Already Exists',
-      description: `Getting a **CloudFrontDistributionAlreadyExists** error means a CloudFront distribution with the specified caller reference already exists—each distribution must have a unique caller reference, so you can't reuse the same reference. This client-side error (4xx) happens when AWS validates caller reference uniqueness. Most common when duplicate caller references are used, but also appears when distributions were already created, previous creation succeeded, caller reference collisions occur, or distributions exist with the same reference.`,
+      description: `Getting a CloudFrontDistributionAlreadyExists error means a CloudFront distribution with the specified caller reference already exists—each distribution must have a unique caller reference, so you can't reuse the same reference. This client-side error (4xx) happens when AWS validates caller reference uniqueness. Most common when duplicate caller references are used, but also appears when distributions were already created, previous creation succeeded, caller reference collisions occur, or distributions exist with the same reference.`,
       metaDescription: 'Fix CloudFrontDistributionAlreadyExists by using unique caller references, generating new references, checking existing distributions, using timestamp-based references, or verifying distribution status with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but duplicate caller reference. Service Control Policy (SCP) enforces caller reference uniqueness.`,
@@ -8324,7 +8324,7 @@ else
     'CloudFrontNoSuchDistribution': {
       code: 'CloudFrontNoSuchDistribution',
       name: 'CloudFront No Such Distribution',
-      description: `Getting a **CloudFrontNoSuchDistribution** error means the CloudFront distribution ID you specified doesn't exist—the distribution might have been deleted, the ID is misspelled, or it's in a different AWS account. This client-side error (4xx) happens when AWS validates CloudFront distribution existence. Most common when distribution IDs are incorrect, but also appears when distributions have been deleted, incorrect distribution ID formats are used, distribution ID typos occur, or distributions are in different accounts.`,
+      description: `Getting a CloudFrontNoSuchDistribution error means the CloudFront distribution ID you specified doesn't exist—the distribution might have been deleted, the ID is misspelled, or it's in a different AWS account. This client-side error (4xx) happens when AWS validates CloudFront distribution existence. Most common when distribution IDs are incorrect, but also appears when distributions have been deleted, incorrect distribution ID formats are used, distribution ID typos occur, or distributions are in different accounts.`,
       metaDescription: 'Fix CloudFrontNoSuchDistribution by verifying distribution IDs, listing all distributions to find correct IDs, checking if distributions were deleted, or verifying distribution existence with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but distribution doesn't exist. Service Control Policy (SCP) restricts distribution access.`,
@@ -8432,7 +8432,7 @@ aws cloudfront get-distribution --id \${DIST_ID} 2>&1 | head -3`,
     'CloudFrontInvalidOrigin': {
       code: 'CloudFrontInvalidOrigin',
       name: 'CloudFront Invalid Origin',
-      description: `Getting a **CloudFrontInvalidOrigin** error means your CloudFront origin configuration is invalid—the origin domain name, protocol, or port configuration doesn't meet CloudFront requirements, or the origin isn't accessible. This client-side error (4xx) happens when AWS validates CloudFront origin configurations. Most common when origin domain names are invalid, but also appears when origin protocols are wrong, port configurations are invalid, origin domains don't resolve, or SSL certificate issues occur.`,
+      description: `Getting a CloudFrontInvalidOrigin error means your CloudFront origin configuration is invalid—the origin domain name, protocol, or port configuration doesn't meet CloudFront requirements, or the origin isn't accessible. This client-side error (4xx) happens when AWS validates CloudFront origin configurations. Most common when origin domain names are invalid, but also appears when origin protocols are wrong, port configurations are invalid, origin domains don't resolve, or SSL certificate issues occur.`,
       metaDescription: 'Fix CloudFrontInvalidOrigin by verifying origin domain names, checking origin accessibility, validating SSL certificates, using correct protocols and ports, or testing origin connectivity with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but invalid origin. Service Control Policy (SCP) enforces origin validation.`,
@@ -8567,7 +8567,7 @@ curl -I https://\${ORIGIN_DOMAIN} \\
     'CloudFrontTooManyDistributions': {
       code: 'CloudFrontTooManyDistributions',
       name: 'CloudFront Too Many Distributions',
-      description: `Hitting a **CloudFrontTooManyDistributions** error means you've reached the maximum number of CloudFront distributions allowed in your AWS account—the default limit is 200 distributions per account, and you can't create more until you delete some or request a limit increase. This client-side error (4xx) happens when AWS enforces CloudFront distribution limits. Most common when account distribution limits are reached, but also appears when too many active distributions exist, distribution limits are exceeded, account-level limits are reached, or maximum distributions are created.`,
+      description: `Hitting a CloudFrontTooManyDistributions error means you've reached the maximum number of CloudFront distributions allowed in your AWS account—the default limit is 200 distributions per account, and you can't create more until you delete some or request a limit increase. This client-side error (4xx) happens when AWS enforces CloudFront distribution limits. Most common when account distribution limits are reached, but also appears when too many active distributions exist, distribution limits are exceeded, account-level limits are reached, or maximum distributions are created.`,
       metaDescription: 'Fix CloudFrontTooManyDistributions by deleting unused distributions, requesting limit increases, disabling unused distributions, consolidating similar distributions, or optimizing usage with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but distribution limit reached. Service Control Policy (SCP) enforces distribution limits.`,
@@ -8678,7 +8678,7 @@ fi`,
     'EC2InvalidParameterCombination': {
       code: 'EC2InvalidParameterCombination',
       name: 'EC2 Invalid Parameter Combination',
-      description: `Getting an **EC2InvalidParameterCombination** error means the EC2 parameters you specified cannot be used together—some parameters are mutually exclusive, require specific combinations, or conflict with each other. This client-side error (4xx) happens when AWS validates EC2 parameter compatibility. Most common when mutually exclusive parameters are used together, but also appears when parameter combinations aren't supported, instance types are incompatible with parameters, network settings conflict, or storage configurations are invalid.`,
+      description: `Getting an EC2InvalidParameterCombination error means the EC2 parameters you specified cannot be used together—some parameters are mutually exclusive, require specific combinations, or conflict with each other. This client-side error (4xx) happens when AWS validates EC2 parameter compatibility. Most common when mutually exclusive parameters are used together, but also appears when parameter combinations aren't supported, instance types are incompatible with parameters, network settings conflict, or storage configurations are invalid.`,
       metaDescription: 'Fix EC2InvalidParameterCombination by reviewing parameter compatibility, removing conflicting parameters, using supported combinations, checking instance type requirements, or verifying network configuration with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 launch but invalid parameter combination. Service Control Policy (SCP) enforces parameter validation.`,
@@ -8793,7 +8793,7 @@ fi`,
     'EC2InvalidSnapshotNotFound': {
       code: 'EC2InvalidSnapshotNotFound',
       name: 'EC2 Invalid Snapshot Not Found',
-      description: `Getting an **EC2InvalidSnapshotNotFound** error means the EBS snapshot ID you specified doesn't exist or isn't available—the snapshot might have been deleted, is in a different region, or isn't shared with your account. This client-side error (4xx) happens when AWS validates EBS snapshot existence. Most common when snapshot IDs are incorrect, but also appears when snapshots have been deleted, snapshots are in different regions, incorrect snapshot ID formats are used, or snapshots aren't shared with your account.`,
+      description: `Getting an EC2InvalidSnapshotNotFound error means the EBS snapshot ID you specified doesn't exist or isn't available—the snapshot might have been deleted, is in a different region, or isn't shared with your account. This client-side error (4xx) happens when AWS validates EBS snapshot existence. Most common when snapshot IDs are incorrect, but also appears when snapshots have been deleted, snapshots are in different regions, incorrect snapshot ID formats are used, or snapshots aren't shared with your account.`,
       metaDescription: 'Fix EC2InvalidSnapshotNotFound by verifying snapshot IDs, listing all snapshots to find correct IDs, checking correct regions, verifying sharing permissions, or using correct snapshot formats with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 access but snapshot doesn't exist. Service Control Policy (SCP) restricts snapshot access.`,
@@ -8910,7 +8910,7 @@ fi`,
     'EC2VolumeInUse': {
       code: 'EC2VolumeInUse',
       name: 'EC2 Volume In Use',
-      description: `Getting an **EC2VolumeInUse** error means the EBS volume you're trying to delete or modify is currently attached to an EC2 instance—volumes must be detached before deletion or certain modifications. This client-side error (4xx) happens when AWS validates EBS volume attachment status. Most common when volumes are attached to running instances, but also appears when volumes are attached to stopped instances, volume deletion is attempted while attached, volume modification occurs while attached, or volumes are in use by another operation.`,
+      description: `Getting an EC2VolumeInUse error means the EBS volume you're trying to delete or modify is currently attached to an EC2 instance—volumes must be detached before deletion or certain modifications. This client-side error (4xx) happens when AWS validates EBS volume attachment status. Most common when volumes are attached to running instances, but also appears when volumes are attached to stopped instances, volume deletion is attempted while attached, volume modification occurs while attached, or volumes are in use by another operation.`,
       metaDescription: 'Fix EC2VolumeInUse by detaching volumes from instances, stopping instances before detaching, waiting for operations to complete, checking attachment status, or verifying no operations are in progress with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 volume operations but volume is attached. Service Control Policy (SCP) enforces volume detachment rules.`,
@@ -9075,7 +9075,7 @@ fi`,
     'IAMDeleteConflict': {
       code: 'IAMDeleteConflict',
       name: 'IAM Delete Conflict',
-      description: `Hitting an **IAMDeleteConflict** error means the IAM entity (user, role, or policy) you're trying to delete is still in use—it has attached policies, group memberships, access keys, or other dependencies that must be removed first. This client-side error (4xx) happens when AWS validates IAM entity dependencies before deletion. Most common when users have attached policies, but also appears when users are members of groups, users have access keys, roles have attached policies, or policies are attached to entities.`,
+      description: `Hitting an IAMDeleteConflict error means the IAM entity (user, role, or policy) you're trying to delete is still in use—it has attached policies, group memberships, access keys, or other dependencies that must be removed first. This client-side error (4xx) happens when AWS validates IAM entity dependencies before deletion. Most common when users have attached policies, but also appears when users are members of groups, users have access keys, roles have attached policies, or policies are attached to entities.`,
       metaDescription: 'Fix IAMDeleteConflict by detaching all policies from entities, removing users from groups, deleting access keys, removing relationships, or identifying dependencies with our AWS guide.',
       causes: [
         `Identity: IAM entity has dependencies. Service Control Policy (SCP) enforces dependency removal.`,
@@ -9214,7 +9214,7 @@ echo "Detach from users, groups, and roles before deletion (IAMDeleteConflict)"`
     'IAMPasswordPolicyViolation': {
       code: 'IAMPasswordPolicyViolation',
       name: 'IAM Password Policy Violation',
-      description: `Getting an **IAMPasswordPolicyViolation** error means the password you're trying to set doesn't meet your AWS account's password policy requirements—the password might be too short, missing required character types, or violate complexity or history rules. This client-side error (4xx) happens when AWS validates passwords against the account password policy. Most common when passwords are too short, but also appears when required characters are missing, complexity requirements aren't met, passwords are in history (reuse prevention), or password policy rules are violated.`,
+      description: `Getting an IAMPasswordPolicyViolation error means the password you're trying to set doesn't meet your AWS account's password policy requirements—the password might be too short, missing required character types, or violate complexity or history rules. This client-side error (4xx) happens when AWS validates passwords against the account password policy. Most common when passwords are too short, but also appears when required characters are missing, complexity requirements aren't met, passwords are in history (reuse prevention), or password policy rules are violated.`,
       metaDescription: 'Fix IAMPasswordPolicyViolation by checking account password policies, ensuring passwords meet all requirements, using password generators, verifying complexity rules, or checking history restrictions with our AWS guide.',
       causes: [
         `Identity: IAM password policy enforcement. Service Control Policy (SCP) enforces password rules.`,
@@ -9346,7 +9346,7 @@ fi`,
     'CloudFrontInvalidViewerCertificate': {
       code: 'CloudFrontInvalidViewerCertificate',
       name: 'CloudFront Invalid Viewer Certificate',
-      description: `Getting a **CloudFrontInvalidViewerCertificate** error means the SSL/TLS certificate you specified for CloudFront is invalid or not properly configured—CloudFront requires certificates to be in the us-east-1 region, valid and not expired, and issued by ACM. This client-side error (4xx) happens when AWS validates CloudFront certificate configuration. Most common when certificates aren't in us-east-1 region, but also appears when certificates are expired or invalid, certificate ARNs are incorrect, certificates aren't issued by ACM, or certificate domains don't match the distribution.`,
+      description: `Getting a CloudFrontInvalidViewerCertificate error means the SSL/TLS certificate you specified for CloudFront is invalid or not properly configured—CloudFront requires certificates to be in the us-east-1 region, valid and not expired, and issued by ACM. This client-side error (4xx) happens when AWS validates CloudFront certificate configuration. Most common when certificates aren't in us-east-1 region, but also appears when certificates are expired or invalid, certificate ARNs are incorrect, certificates aren't issued by ACM, or certificate domains don't match the distribution.`,
       metaDescription: 'Fix CloudFrontInvalidViewerCertificate by ensuring certificates are in us-east-1, verifying validity and expiration, using ACM certificate ARNs, checking domain matches, or requesting new certificates with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but invalid certificate. Service Control Policy (SCP) enforces certificate validation.`,
@@ -9465,7 +9465,7 @@ fi`,
     'CloudFrontDistributionNotDisabled': {
       code: 'CloudFrontDistributionNotDisabled',
       name: 'CloudFront Distribution Not Disabled',
-      description: `Getting a **CloudFrontDistributionNotDisabled** error means you're trying to delete a CloudFront distribution that's still enabled—CloudFront requires distributions to be disabled and fully deployed before deletion. This client-side error (4xx) happens when AWS validates distribution state before deletion. Most common when distributions are still enabled, but also appears when deletion is attempted while enabled, distributions aren't fully disabled, deployment is still in progress, or distribution state isn't ready for deletion.`,
+      description: `Getting a CloudFrontDistributionNotDisabled error means you're trying to delete a CloudFront distribution that's still enabled—CloudFront requires distributions to be disabled and fully deployed before deletion. This client-side error (4xx) happens when AWS validates distribution state before deletion. Most common when distributions are still enabled, but also appears when deletion is attempted while enabled, distributions aren't fully disabled, deployment is still in progress, or distribution state isn't ready for deletion.`,
       metaDescription: 'Fix CloudFrontDistributionNotDisabled by disabling distributions, waiting for deployment to complete, verifying disabled status, checking distribution status, or retrying deletion after disabling with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but distribution not disabled. Service Control Policy (SCP) enforces distribution state.`,
@@ -9574,7 +9574,7 @@ fi`,
     'EC2InvalidKeyPairNotFound': {
       code: 'EC2InvalidKeyPairNotFound',
       name: 'EC2 Invalid Key Pair Not Found',
-      description: `Getting an **EC2InvalidKeyPairNotFound** error means the EC2 key pair you specified doesn't exist in the current region—the key pair might be in a different region, was deleted, or the name is misspelled. This client-side error (4xx) happens when AWS validates EC2 key pair existence. Most common when key pair names don't exist, but also appears when key pairs are in different regions, key pairs have been deleted, incorrect key pair name formats are used, or key pair name typos occur.`,
+      description: `Getting an EC2InvalidKeyPairNotFound error means the EC2 key pair you specified doesn't exist in the current region—the key pair might be in a different region, was deleted, or the name is misspelled. This client-side error (4xx) happens when AWS validates EC2 key pair existence. Most common when key pair names don't exist, but also appears when key pairs are in different regions, key pairs have been deleted, incorrect key pair name formats are used, or key pair name typos occur.`,
       metaDescription: 'Fix EC2InvalidKeyPairNotFound by verifying key pair names, listing all key pairs to find correct names, checking correct regions, creating new key pairs if needed, or using correct name formats with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 launch but key pair doesn't exist. Service Control Policy (SCP) restricts key pair access.`,
@@ -9684,7 +9684,7 @@ fi`,
     'EC2InvalidSecurityGroupNotFound': {
       code: 'EC2InvalidSecurityGroupNotFound',
       name: 'EC2 Invalid Security Group Not Found',
-      description: `Getting an **EC2InvalidSecurityGroupNotFound** error means the EC2 security group you specified doesn't exist—the security group might be in a different VPC or region, was deleted, or the ID/name is misspelled. This client-side error (4xx) happens when AWS validates EC2 security group existence. Most common when security group IDs don't exist, but also appears when security group names don't exist, security groups are in different VPCs, security groups are in different regions, or security groups have been deleted.`,
+      description: `Getting an EC2InvalidSecurityGroupNotFound error means the EC2 security group you specified doesn't exist—the security group might be in a different VPC or region, was deleted, or the ID/name is misspelled. This client-side error (4xx) happens when AWS validates EC2 security group existence. Most common when security group IDs don't exist, but also appears when security group names don't exist, security groups are in different VPCs, security groups are in different regions, or security groups have been deleted.`,
       metaDescription: 'Fix EC2InvalidSecurityGroupNotFound by verifying security group IDs or names, listing all security groups to find correct ones, checking correct VPCs and regions, or creating new security groups with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 launch but security group doesn't exist. Service Control Policy (SCP) restricts security group access.`,
@@ -9784,7 +9784,7 @@ fi`,
     'IAMUnmodifiableEntity': {
       code: 'IAMUnmodifiableEntity',
       name: 'IAM Unmodifiable Entity',
-      description: `Getting an **IAMUnmodifiableEntity** error means the IAM entity (user, role, or policy) you're trying to modify cannot be modified—AWS managed entities have restrictions on modifications, and you must create customer managed alternatives. This client-side error (4xx) happens when AWS validates IAM entity modification permissions. Most common when AWS managed policies cannot be modified, but also appears when service-linked roles have restrictions, AWS managed users have limitations, entities have modification restrictions, or entities are read-only.`,
+      description: `Getting an IAMUnmodifiableEntity error means the IAM entity (user, role, or policy) you're trying to modify cannot be modified—AWS managed entities have restrictions on modifications, and you must create customer managed alternatives. This client-side error (4xx) happens when AWS validates IAM entity modification permissions. Most common when AWS managed policies cannot be modified, but also appears when service-linked roles have restrictions, AWS managed users have limitations, entities have modification restrictions, or entities are read-only.`,
       metaDescription: 'Fix IAMUnmodifiableEntity by creating customer managed policies instead, creating new entities with desired configurations, using attachable policy versions, checking modification permissions, or reviewing entity type restrictions with our AWS guide.',
       causes: [
         `Identity: IAM entity modification restrictions. Service Control Policy (SCP) enforces entity modification rules.`,
@@ -9908,7 +9908,7 @@ fi`,
     'CloudFrontCNAMEAlreadyExists': {
       code: 'CloudFrontCNAMEAlreadyExists',
       name: 'CloudFront CNAME Already Exists',
-      description: `Getting a **CloudFrontCNAMEAlreadyExists** error means the CNAME (alternate domain name) you're trying to use is already in use by another CloudFront distribution—each CNAME must be unique across all distributions, so you can't reuse the same domain name. This client-side error (4xx) happens when AWS validates CNAME uniqueness. Most common when CNAMEs are already used by other distributions, but also appears when domain names are already configured, duplicate CNAME assignments occur, previous distributions are using the CNAME, or CNAME conflicts exist with existing distributions.`,
+      description: `Getting a CloudFrontCNAMEAlreadyExists error means the CNAME (alternate domain name) you're trying to use is already in use by another CloudFront distribution—each CNAME must be unique across all distributions, so you can't reuse the same domain name. This client-side error (4xx) happens when AWS validates CNAME uniqueness. Most common when CNAMEs are already used by other distributions, but also appears when domain names are already configured, duplicate CNAME assignments occur, previous distributions are using the CNAME, or CNAME conflicts exist with existing distributions.`,
       metaDescription: 'Fix CloudFrontCNAMEAlreadyExists by using different domain names, removing CNAMEs from other distributions, verifying CNAME availability, checking all distributions for usage, or using unique domain names with our AWS guide.',
       causes: [
         `Identity: IAM policy allows CloudFront but CNAME conflict. Service Control Policy (SCP) enforces CNAME uniqueness.`,
@@ -10001,7 +10001,7 @@ fi`,
     'EC2InvalidSubnetIDNotFound': {
       code: 'EC2InvalidSubnetIDNotFound',
       name: 'EC2 Invalid Subnet ID Not Found',
-      description: `Getting an **EC2InvalidSubnetIDNotFound** error means the EC2 subnet ID you specified doesn't exist—the subnet might be in a different VPC or region, was deleted, or the ID is misspelled. This client-side error (4xx) happens when AWS validates EC2 subnet existence. Most common when subnet IDs don't exist, but also appears when subnets are in different VPCs, subnets are in different regions, subnets have been deleted, or incorrect subnet ID formats are used.`,
+      description: `Getting an EC2InvalidSubnetIDNotFound error means the EC2 subnet ID you specified doesn't exist—the subnet might be in a different VPC or region, was deleted, or the ID is misspelled. This client-side error (4xx) happens when AWS validates EC2 subnet existence. Most common when subnet IDs don't exist, but also appears when subnets are in different VPCs, subnets are in different regions, subnets have been deleted, or incorrect subnet ID formats are used.`,
       metaDescription: 'Fix EC2InvalidSubnetIDNotFound by verifying subnet IDs, listing all subnets to find correct IDs, checking correct VPCs and regions, or using correct subnet ID formats with our AWS guide.',
       causes: [
         `Identity: IAM policy allows EC2 launch but subnet doesn't exist. Service Control Policy (SCP) restricts subnet access.`,
@@ -10102,7 +10102,7 @@ fi`,
     'IAMConcurrentModification': {
       code: 'IAMConcurrentModification',
       name: 'IAM Concurrent Modification',
-      description: `Getting an **IAMConcurrentModification** error means multiple requests to modify the same IAM entity are being processed simultaneously, causing a conflict—you need to wait for the current operation to complete before retrying. This client-side error (4xx) happens when AWS detects concurrent modification attempts. Most common when simultaneous policy updates occur, but also appears when concurrent role modifications happen, multiple users update the same entity, race conditions occur in updates, or overlapping modification requests are made.`,
+      description: `Getting an IAMConcurrentModification error means multiple requests to modify the same IAM entity are being processed simultaneously, causing a conflict—you need to wait for the current operation to complete before retrying. This client-side error (4xx) happens when AWS detects concurrent modification attempts. Most common when simultaneous policy updates occur, but also appears when concurrent role modifications happen, multiple users update the same entity, race conditions occur in updates, or overlapping modification requests are made.`,
       metaDescription: 'Fix IAMConcurrentModification by waiting for operations to complete, retrying after delays, implementing retry logic with backoff, checking entity state before modifying, or using conditional updates with our AWS guide.',
       causes: [
         `Identity: IAM entity concurrent modification conflict. Service Control Policy (SCP) enforces modification ordering.`,
